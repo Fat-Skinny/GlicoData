@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<!--
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements.  See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership.  The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+     KIND, either express or implied.  See the License for the
+    specific language governing permissions and limitations
+    under the License.
+-->
+<html>
+    <head>
+        <meta http-equiv="Content-Security-Policy" content="default-src 'self';style-src 'self' 'unsafe-inline'">
+        <meta name="format-detection" content="telephone=no">
+        <meta name="msapplication-tap-highlight" content="no">
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+
+        <title>GlicoData</title>
+
+        <!--scripts-->
+        <script src="lib/angularjs/angular.min.js"></script>
+        <script src="lib/jquery/jquery-1.12.0.min.js"></script>
+        <script src="lib/angular-animate/angular-animate.min.js"></script>
+        <script src="lib/bootstrap/js/ui-bootstrap-tpls-1.1.2.min.js"></script>
+        <script src="lib/bootstrap/js/bootstrap.min.js"></script>
+        <script src="lib/angular-ui-router/angular-ui-router.min.js"></script>
+        <script type="text/javascript" src="cordova.js"></script>
+        <script type="text/javascript" src="js/app.js"></script>
+
+        <!--services-->
+        <script type="text/javascript" src="js/Services/DBService.js"></script>
+
+        <!--controllers-->
+        <script type="text/javascript" src="js/Controllers/indexController.js"></script>
+        <script type="text/javascript" src="js/Controllers/registerManagerController.js"></script>
+
+        <!--css-->
+        <link rel="stylesheet" type="text/css" media="all" href="lib/bootstrap/css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" media="all" href="lib/bootstrap/css/bootstrap-theme.css">
+        <link rel="stylesheet" type="text/css" media="all" href="lib/font-awesome/css/font-awesome.min.css" />
+        <link rel="stylesheet" type="text/css" media="all" href="css/app.css" />
+
+        <!--loading for http-->
+        <link rel='stylesheet' href='lib/load/loading-bar.min.css' type='text/css' media='all' />
+        <script type='text/javascript' src='lib/load/loading-bar.min.js'></script>
+
+        <!-- toastr -->
+        <link rel='stylesheet' href='lib/angular-toaster/angular-toastr.min.css' type='text/css' media='all' />
+        <script type='text/javascript' src='lib/angular-toaster/angular-toastr.min.js'></script>
+        <script type='text/javascript' src='lib/angular-toaster/angular-toastr.tpls.min.js'></script>
+    </head>
+    <body ng-controller="indexController">
+        <nav class="navbar navbar-default navbar-fixed-top ">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#collaps-header-menu" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">GlicoData</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse" id="collaps-header-menu">
+                <div ng-click="goToRM()" data-toggle="collapse" data-target="#collaps-header-menu">
+                    <h5>Insert glicemic data</h5>
+                </div>
+                <div ng-click="" data-toggle="collapse" data-target="#collaps-header-menu">
+                    <h5>Graphics</h5>
+                </div>
+                <div ng-click="" data-toggle="collapse" data-target="#collaps-header-menu">
+                    <h5>Glicemic registers</h5>
+                </div>
+                <div ng-click="" data-toggle="collapse" data-target="#collaps-header-menu">
+                    <h5>Download registers</h5>
+                </div>
+                <div ng-click="" data-toggle="collapse" data-target="#collaps-header-menu">
+                    <h5>Settings</h5>
+                </div>
+            </div><!-- /.navbar-collapse -->
+        </nav>
+        <div ui-view >
+
+        </div>
+    </body>
+</html>

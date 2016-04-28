@@ -1,0 +1,23 @@
+.centralizedElement{
+    margin-top:10%;
+    margin-bottom:45%;
+}
+
+.transparentElement{
+    border: 0;
+    height:17px;
+    width: calc(100% - 2px);
+    margin-left:1px;
+    background-color: transparent;
+    -webkit-appearance: none;
+    box-shadow: -8px 10px 0px -7px #ebebeb, 8px 10px 0px -7px #ebebeb;
+    -webkit-transition: box-shadow 0.3s;
+    transition: box-shadow 0.3s;
+}
+hr {
+    border-top: 1px solid #8c8b8b;
+}
+.transparentElement:focus {
+    outline: none;
+    box-shadow: -8px 10px 0px -7px #4EA6EA, 8px 10px 0px -7px #4EA6EA;
+}
