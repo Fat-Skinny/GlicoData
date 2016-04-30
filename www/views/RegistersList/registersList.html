@@ -1,0 +1,22 @@
+<div class="container centralizedElement">
+
+
+    <span class="btn btn-block btn-success noFocus glyphicon glyphicon-search" data-toggle="collapse" data-target="#searchFields"></span>
+    <div class="well collapse" id="searchFields">
+        <label><input type="radio" name="searchMetod" ng-model="SM" value="R"> Search by range </label>
+        <label><input type="radio" name="searchMetod" ng-model="SM" value="D"> Search by specific Date</label>
+        <div class="margin10px" ng-show="SR">
+            Search register from</br>
+            <input type="date" class="transparentElement margin10px" min="1900-01-01" max="{{actualDate | date:'yyyy-MM-dd'}}" ng-model="startDate"/>
+            To</br>
+            <input type="date" class="transparentElement margin10px" min="{{startDate | date:'yyyy-MM-dd'}}" max="{{actualDate | date:'yyyy-MM-dd'}}" ng-model="endDate" ng-disabled="startDate == null"/></br>
+            <button class="btn btn-block btn-success noFocus" data-toggle="collapse" data-target="#searchFields" ng-click="">Go</button>
+        </div>
+        <div class="margin10px" ng-show="SD">
+            Search register of the specific date</br>
+            <input type="date" class="transparentElement margin10px" min="1900-01-01" max="{{actualDate | date:'yyyy-MM-dd'}}" placeholder="{{actualDate | date:'yyyy-MM-dd'}}" ng-model="specificDate"/>
+            <button class="btn btn-block btn-success noFocus" data-toggle="collapse" data-target="#searchFields" ng-click="">Go</button>
+        </div>
+    </div>
+
+</div>
