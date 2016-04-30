@@ -46,14 +46,14 @@ app.config(['$stateProvider', '$urlRouterProvider','cfpLoadingBarProvider', func
 
     $urlRouterProvider.otherwise( function($injector, $location, $rootScope) {
         var $state = $injector.get("$state");
-        $state.go("rm");
+        $state.go("rl");
     });
 
     $stateProvider
-        .state('rm',{
-            url: '/rm',
-            templateUrl: 'views/Registers/registerManager.html',
-            controller: 'registerManagerController'
+        .state('rl',{
+            url: '/rl',
+            templateUrl: 'views/RegistersList/registersList.html',
+            controller: 'registersListController'
         });
 }]);
 
