@@ -1,5 +1,6 @@
 app.controller('indexController', ['$state','$scope','DBService', function ($state,$scope,DBService) {
-    //DBService.createTables();
+    DBService.createTables();
+
     $scope.goToRM = function(){
         $state.go('rl');
     };
