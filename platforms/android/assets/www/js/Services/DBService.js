@@ -1,4 +1,5 @@
 app.service('DBService',['$q',function($q){
+    floatingRegister = [];
     DBServiceMethods = [];
     db = window.sqlitePlugin.openDatabase({name: "GlicoData.db", location: "default", androidLockWorkaround: 1});
 
@@ -44,9 +45,13 @@ app.service('DBService',['$q',function($q){
     DBServiceMethods.getFirstRegisterDate = function(){
         var deferred = $q.defer();
         db.transaction(function(tx){
-            tx.executeSql("SELECT REGISTERDAY FROM GLICO_DATA ORDER BY REGISTERDAY ASC LIMIT 1",[],
+            tx.executeSql("SELECT REGISTERDAY AS SR FROM GLICO_DATA ORDER BY REGISTERDAY ASC LIMIT 1",[],
             function(tx,res){
-                deferred.resolve(res.rows.item(0).REGISTERDAY);
+                if(res.rows.length == 0){
+                    deferred.resolve(new Date().getTime()-5184000000);
+                }else{
+                    deferred.resolve(res.rows.item(0).SR);
+                }
             },function(e){
                 deferred.reject(e.message);
             });
@@ -70,14 +75,65 @@ app.service('DBService',['$q',function($q){
     DBServiceMethods.getLastRegisterDate = function(){
         var deferred = $q.defer();
         db.transaction(function(tx){
-            tx.executeSql("SELECT REGISTERDAY FROM GLICO_DATA ORDER BY REGISTERDAY DESC LIMIT 1",[],
+            tx.executeSql("SELECT REGISTERDAY AS SR FROM GLICO_DATA ORDER BY REGISTERDAY DESC LIMIT 1",[],
             function(tx,res){
-                deferred.resolve(res.rows.item(0).REGISTERDAY);
+                deferred.resolve(res.rows.item(0).SR);
             },function(e){
                 deferred.reject(e.message);
             });
         });
         return deferred.promise;
+    }
+
+    DBServiceMethods.getRangeOfRegisters = function(start,end){
+        var deferred = $q.defer();
+        db.transaction(function(tx){
+            tx.executeSql("SELECT * FROM GLICO_DATA WHERE REGISTERDAY BETWEEN ? AND ? ORDER BY REGISTERDAY DESC",[start,end],
+            function(tx,res){
+                if(res.rows.length == 0){
+                    deferred.resolve("NO REGISTERS FOUND");
+                }else{
+                    var resultArray = [];
+                    for(i = 0; i < res.rows.length ; i++){
+                        resultArray[i] = res.rows.item(i);
+                    }
+                    deferred.resolve(resultArray);
+                }
+            },function(e){
+                deferred.reject(e.message);
+            });
+        });
+        return deferred.promise;
+    }
+
+    DBServiceMethods.getRegister = function(registerDay){
+        var deferred = $q.defer();
+        db.transaction(function(tx){
+            tx.executeSql("SELECT * FROM GLICO_DATA WHERE REGISTERDAY = ?",[registerDay],
+            function(tx,res){
+                if(res.rows.length == 0){
+                    deferred.resolve("NO REGISTERS FOUND");
+                }else{
+                    var resultArray = [];
+                    for(i = 0; i < res.rows.length ; i++){
+                        resultArray[i] = res.rows.item(i);
+                    }
+                    deferred.resolve(resultArray);
+                }
+            },function(e){
+                deferred.reject(e.message);
+            });
+        });
+        return deferred.promise;
+    }
+
+    DBServiceMethods.setFloatingRegister = function(register){
+        floatingRegister = register;
+        return "OK";
+    }
+
+    DBServiceMethods.getFloatingRegister = function(){
+        return floatingRegister;
     }
 
     return DBServiceMethods;

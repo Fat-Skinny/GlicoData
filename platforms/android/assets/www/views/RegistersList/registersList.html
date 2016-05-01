@@ -1,27 +1,43 @@
 <div class="container centralizedElement">
 
     <span class="btn btn-block btn-success noFocus glyphicon glyphicon-plus" data-toggle="collapse" data-target="#registerField"></span>
-    <div class="well collapse" id="registerField">
-        Input the register day</br>
-        <input type="date" class="transparentElement margin10px" min="1971-01-01" max="{{actualDate | date:'yyyy-MM-dd'}}" ng-model="newRegisterDate"/>
-        <button class="btn btn-block btn-success noFocus" data-toggle="collapse" data-target="#registerField" ng-click="newRegister(newRegisterDate)">Insert</button>
+    <div class="collapse" id="registerField">
+        <div class="well well-sm">
+            Input the register day</br>
+            <input id="newRegisterDate" type="date" class="transparentElement margin10px" min="{{TwoMonthsAgo() | date:'yyyy-MM-dd'}}" max="{{actualDate | date:'yyyy-MM-dd'}}"/>
+            <button class="btn btn-block btn-success noFocus" data-toggle="collapse" data-target="#registerField" ng-click="newRegister()">Insert</button>
+        </div>
     </div></br>
     <span class="btn btn-block btn-success noFocus glyphicon glyphicon-search" data-toggle="collapse" data-target="#searchFields"></span>
-    <div class="well collapse" id="searchFields">
-        <label><input type="radio" name="searchMetod" ng-model="SM" value="R"> Search by range </label>
-        <label><input type="radio" name="searchMetod" ng-model="SM" value="D"> Search by specific Date</label>
-        <div class="margin10px" ng-show="SR">
-            Search register from</br>
-            <input type="date" class="transparentElement margin10px" min="lastRegisterDate()" max="{{yesterday() | date:'yyyy-MM-dd'}}" ng-model="startDate"/>
-            To</br>
-            <input type="date" class="transparentElement margin10px" min="{{startDate | date:'yyyy-MM-dd'}}" max="{{actualDate | date:'yyyy-MM-dd'}}" ng-model="endDate" ng-disabled="startDate == null"/></br>
-            <button class="btn btn-block btn-success noFocus" data-toggle="collapse" data-target="#searchFields" ng-click="">Go</button>
+    <div class="collapse" id="searchFields">
+        <div class="well well-sm">
+            <label><input type="radio" name="searchMetod" ng-model="SM" value="R"> Search by range </label>
+            <label><input type="radio" name="searchMetod" ng-model="SM" value="D"> Search by specific Date</label>
+            <div class="margin10px" ng-show="SR">
+                Search register from</br>
+                <input type="date" class="transparentElement margin10px" min="{{firstRegisterDate | date:'yyyy-MM-dd'}}" max="{{yesterday() | date:'yyyy-MM-dd'}}" ng-model="startDate"/>
+                To</br>
+                <input id="endDate" type="date" class="transparentElement margin10px" min="{{startDate | date:'yyyy-MM-dd'}}" max="{{actualDate | date:'yyyy-MM-dd'}}" ng-disabled="startDate == null"/></br>
+                <button class="btn btn-block btn-success noFocus" data-toggle="collapse" data-target="#searchFields" ng-click="getRangeOfRegisters()">Go</button>
+            </div>
+            <div class="margin10px" ng-show="SD">
+                Search register of the specific date</br>
+                <input type="date" id="specificDate" class="transparentElement margin10px" min="{{firstRegisterDate | date:'yyyy-MM-dd'}}" max="{{actualDate | date:'yyyy-MM-dd'}}"/>
+                <button class="btn btn-block btn-success noFocus" data-toggle="collapse" data-target="#searchFields" ng-click="getRegister()">Go</button>
+            </div>
         </div>
-        <div class="margin10px" ng-show="SD">
-            Search register of the specific date</br>
-            <input type="date" class="transparentElement margin10px" min="lastRegisterDate()" max="{{actualDate | date:'yyyy-MM-dd'}}" ng-model="specificDate"/>
-            <button class="btn btn-block btn-success noFocus" data-toggle="collapse" data-target="#searchFields" ng-click="">Go</button>
-        </div>
+    </div></br>
+    <div class="table-responsive" ng-show="registerArrays.length > 0">
+        <table class="table table-striped">
+            <th>Date of register</th>
+            <th>Visualize</th>
+            <th>Delete</th>
+            <tr ng-repeat="registerRow in registerArrays">
+                <td>{{ registerRow.REGISTERDAY | date: 'MM/dd/yyyy' }}</td>
+                <td><span class="btn btn-success noFocus glyphicon glyphicon-zoom-in" ng-click=""></span></td>
+                <td><span class="btn btn-success noFocus glyphicon glyphicon-remove" ng-click=""></span></td>
+            </tr>
+        </table>
     </div>
 
 </div>

@@ -1,24 +1,18 @@
 app.controller('registersListController', ['$scope','$filter','DBService','toastr', function ($scope,$filter,DBService,toastr) {
-    $scope.actualDate =new Date();//$filter('date')((new Date()), 'yyyy/MM/dd');
+    $scope.actualDate = new Date();//$filter('date')((new Date()), 'yyyy/MM/dd');
+    $scope.actualDate.setHours(0,0,0,0);
     $scope.startDate = null;
-    $scope.actualYear = $scope.actualDate.getFullYear();
-    if($scope.actualDate.getMonth()+1 < 10){
-        $scope.actualMonth = '0' +($scope.actualDate.getMonth()+1);
-    }else{
-        $scope.actualMonth = $scope.actualDate.getMonth()+1;
-    }
-    if($scope.actualDate.getDate() < 10){
-        $scope.actualDay = '0' + $scope.actualDate.getDate();
-    }else{
-        $scope.actualDay = $scope.actualDate.getDate();
-    }
-    $scope.specificDate = new Date($scope.actualYear+'-'+$scope.actualMonth+'-'+$scope.actualDay+'T00:00:00');
+    $scope.registerArrays = [];
+    document.getElementById("specificDate").value = $filter('date')($scope.actualDate, 'yyyy-MM-dd');
     $scope.SM = null;
     $scope.SR = false;
     $scope.SD = false;
-    $scope.newRegisterDate = new Date($scope.actualYear+'-'+$scope.actualMonth+'-'+$scope.actualDay+'T00:00:00');
+    $scope.firstRegisterDate = $scope.actualDate.getTime()-5184000000;
+    document.getElementById("newRegisterDate").value = $filter('date')($scope.actualDate, 'yyyy-MM-dd');
 
-    $scope.newRegister = function(registerDate){
+    $scope.newRegister = function(){
+        var registerDate = new Date(document.getElementById('newRegisterDate').value);
+        registerDate = new Date(registerDate.getTime()+((new Date().getTimezoneOffset())*60*1000));
         if(registerDate == null || registerDate == ""){
             toastr.error("Date of register is null!");
         }else{
@@ -29,6 +23,7 @@ app.controller('registersListController', ['$scope','$filter','DBService','toast
                 }else{
                     DBService.insertRegister(registerDate.getTime()).then(function(res){
                         toastr.success("Register inserted with success!");
+                        $scope.getFirstRegisterDate();
                     },function(error){
                         toastr.error(error);
                     });
@@ -39,16 +34,55 @@ app.controller('registersListController', ['$scope','$filter','DBService','toast
         }
     }
 
-    $scope.lastRegisterDate = function(){
-        DBService.getFirstRegisterDate().then(function(res){
-            return res;
+    $scope.getRangeOfRegisters = function(){
+        var start = $scope.startDate.getTime();
+        var end = new Date(document.getElementById('endDate').value).getTime()+((new Date().getTimezoneOffset())*60*1000);
+        DBService.getRangeOfRegisters(start,end).then(function(res){
+            if(res == "NO REGISTERS FOUND"){
+                toastr.error("NO REGISTERS FOUND");
+                $scope.registerArrays = [];
+            }else{
+                $scope.registerArrays = res;
+            }
         },function(error){
-            return '1900-01-01';
+            toastr.error(error);
         });
     }
 
+    $scope.getRegister = function(){
+         var registerDate = new Date(document.getElementById('specificDate').value).getTime()+((new Date().getTimezoneOffset())*60*1000);
+         DBService.getRegister(registerDate).then(function(res){
+             if(res == "NO REGISTERS FOUND"){
+                 toastr.error("NO REGISTERS FOUND");
+                 $scope.registerArrays = [];
+             }else{
+                 $scope.registerArrays = res;
+             }
+         },function(error){
+             toastr.error(error);
+         });
+    }
+
+    $scope.getFirstRegisterDate = function(){
+        DBService.getFirstRegisterDate().then(function(res){
+            if(res == $scope.actualDate.getTime() || res == $scope.actualDate.getTime()-86400000){
+                $scope.firstRegisterDate = new Date(res - 24*60*60*1000*3);
+            }else{
+                $scope.firstRegisterDate = new Date(res);
+            }
+        },function(error){
+            $scope.firstRegisterDate = new Date($scope.actualDate.getTime()-5184000000);
+        });
+    }
+
+    $scope.getFirstRegisterDate();
+
     $scope.yesterday = function (){
         return new Date($scope.actualDate.getTime()-86400000);
+    }
+
+    $scope.TwoMonthsAgo = function (){
+        return new Date($scope.actualDate.getTime()-5184000000);
     }
 
     $scope.$watch('SM', function(newValue, oldValue) {
@@ -63,7 +97,7 @@ app.controller('registersListController', ['$scope','$filter','DBService','toast
 
     $scope.$watch('startDate', function(newValue, oldValue) {
         if(newValue == null){
-        $scope.endDate = null;
+            document.getElementById('endDate').value = null;
         }
     });
 
