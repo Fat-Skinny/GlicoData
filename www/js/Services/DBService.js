@@ -1,5 +1,5 @@
 app.service('DBService',['$q',function($q){
-    floatingRegister = [];
+    floatingRegister = {};
     DBServiceMethods = [];
     db = window.sqlitePlugin.openDatabase({name: "GlicoData.db", location: "default", androidLockWorkaround: 1});
 
@@ -18,6 +18,7 @@ app.service('DBService',['$q',function($q){
     };
 
     DBServiceMethods.insertRegister = function(registerDay){
+        var zeroTime = ((new Date().getTimezoneOffset())*60*1000);
         var deferred = $q.defer();
         db.transaction(function(tx){
             tx.executeSql("INSERT INTO GLICO_DATA ("+
@@ -32,7 +33,7 @@ app.service('DBService',['$q',function($q){
                           "AFTERNOONLUNCH_VALUE,"+
                           "DINNER_TIME,"+
                           "DINNER_VALUE) "+
-                          "VALUES (?,?,?,?,?,?,?,?,?,?,?)",[registerDay,null,null,null,null,null,null,null,null,null,null],
+                          "VALUES (?,?,?,?,?,?,?,?,?,?,?)",[registerDay,zeroTime,0,zeroTime,0,zeroTime,0,zeroTime,0,zeroTime,0],
                           function(tx,res){
                             deferred.resolve(res);
                           },function(e){
@@ -129,11 +130,48 @@ app.service('DBService',['$q',function($q){
 
     DBServiceMethods.setFloatingRegister = function(register){
         floatingRegister = register;
-        return "OK";
+        floatingRegister.BREAKFAST_TIME = new Date(floatingRegister.BREAKFAST_TIME);
+        floatingRegister.MIDDLEMORNINGLUNCH_TIME = new Date(floatingRegister.MIDDLEMORNINGLUNCH_TIME);
+        floatingRegister.LUNCH_TIME = new Date(floatingRegister.LUNCH_TIME);
+        floatingRegister.AFTERNOONLUNCH_TIME = new Date(floatingRegister.AFTERNOONLUNCH_TIME);
+        floatingRegister.DINNER_TIME = new Date(floatingRegister.DINNER_TIME);
     }
 
     DBServiceMethods.getFloatingRegister = function(){
+//        alert(JSON.stringify(floatingRegister)));
         return floatingRegister;
+    }
+
+    DBServiceMethods.updateRegister = function(registerDate,periodTime,periodValue,flag){
+        var deferred = $q.defer();
+        var query = "";
+        switch (flag){
+            case 0:
+                query = "UPDATE GLICO_DATA SET BREAKFAST_TIME = ?,BREAKFAST_VALUE = ? WHERE REGISTERDAY = ?";
+                break;
+            case 1:
+                query = "UPDATE GLICO_DATA SET MIDDLEMORNINGLUNCH_TIME = ?,MIDDLEMORNINGLUNCH_VALUE = ? WHERE REGISTERDAY = ?";
+                break;
+            case 2:
+                query = "UPDATE GLICO_DATA SET LUNCH_TIME = ?,LUNCH_VALUE = ? WHERE REGISTERDAY = ?";
+                break;
+            case 3:
+                query = "UPDATE GLICO_DATA SET AFTERNOONLUNCH_TIME = ?,AFTERNOONLUNCH_VALUE = ? WHERE REGISTERDAY = ?";
+                break;
+            case 4:
+                query = "UPDATE GLICO_DATA SET DINNER_TIME = ?,DINNER_VALUE = ? WHERE REGISTERDAY = ?";
+                break;
+            default:
+                return "ERRO,FLAG INVALIDA";
+        }
+        db.transaction(function(tx){
+            tx.executeSql(query,[periodTime,periodValue,registerDate],function(tx,res){
+                deferred.resolve("OK");
+            },function(e){
+                deferred.reject(e.message);
+            });
+        });
+        return deferred.promise;
     }
 
     return DBServiceMethods;

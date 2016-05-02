@@ -1,4 +1,4 @@
-app.controller('registersListController', ['$scope','$filter','DBService','toastr', function ($scope,$filter,DBService,toastr) {
+app.controller('registersListController', ['$scope','$filter','DBService','toastr','$state', function ($scope,$filter,DBService,toastr,$state) {
     $scope.actualDate = new Date();//$filter('date')((new Date()), 'yyyy/MM/dd');
     $scope.actualDate.setHours(0,0,0,0);
     $scope.startDate = null;
@@ -24,6 +24,12 @@ app.controller('registersListController', ['$scope','$filter','DBService','toast
                     DBService.insertRegister(registerDate.getTime()).then(function(res){
                         toastr.success("Register inserted with success!");
                         $scope.getFirstRegisterDate();
+                        DBService.getRegister(registerDate.getTime()).then(function(res){
+                            DBService.setFloatingRegister(res[0]);
+                            $state.go('rm');
+                        },function(error){
+                            toastr.error(error);
+                        });
                     },function(error){
                         toastr.error(error);
                     });
@@ -33,6 +39,12 @@ app.controller('registersListController', ['$scope','$filter','DBService','toast
             });
         }
     }
+
+    $scope.manageRegister = function(register){
+        DBService.setFloatingRegister(register);
+        $state.go('rm');
+    }
+
 
     $scope.getRangeOfRegisters = function(){
         var start = $scope.startDate.getTime();
