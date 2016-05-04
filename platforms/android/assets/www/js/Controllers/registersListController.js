@@ -1,31 +1,40 @@
 app.controller('registersListController', ['$scope','$filter','DBService','toastr','$state', function ($scope,$filter,DBService,toastr,$state) {
-    $scope.actualDate = new Date();//$filter('date')((new Date()), 'yyyy/MM/dd');
-    $scope.actualDate.setHours(0,0,0,0);
-    $scope.startDate = null;
-    $scope.registerArrays = [];
-    document.getElementById("specificDate").value = $filter('date')($scope.actualDate, 'yyyy-MM-dd');
-    $scope.SM = null;
-    $scope.SR = false;
-    $scope.SD = false;
-    $scope.firstRegisterDate = $scope.actualDate.getTime()-5184000000;
-    document.getElementById("newRegisterDate").value = $filter('date')($scope.actualDate, 'yyyy-MM-dd');
+    $scope.listView = {};
+    $scope.listView.actualDate = new Date();//$filter('date')((new Date()), 'yyyy/MM/dd');
+    $scope.listView.actualDate.setHours(0,0,0,0);
+    $scope.listView.yesterday = new Date($scope.listView.actualDate.getTime()-86400000);
+    $scope.listView.TwoMonthsAgo = new Date($scope.listView.actualDate.getTime()-5184000000);
+    $scope.listView.registerArrays = DBService.getFloatingArray();
+    $scope.listView.specificDate = $scope.listView.actualDate;//$filter('date')($scope.actualDate, 'yyyy-MM-dd');
+    $scope.listView.SM = 'SD';
+    $scope.listView.newRegisterDate = $scope.listView.actualDate;// $filter('date')($scope.actualDate, 'yyyy-MM-dd');
+
+    DBService.getFirstRegisterDate().then(function(res){
+        if(res == $scope.listView.actualDate.getTime()){
+            $scope.listView.firstRegisterDate = new Date(res - 24*60*60*1000*2);
+        }else{
+            $scope.listView.firstRegisterDate = new Date(res);
+        }
+    },function(error){
+        $scope.listView.firstRegisterDate = new Date($scope.listView.actualDate.getTime()-5184000000);
+    });
 
     $scope.newRegister = function(){
-        var registerDate = new Date(document.getElementById('newRegisterDate').value);
-        registerDate = new Date(registerDate.getTime()+((new Date().getTimezoneOffset())*60*1000));
+        var registerDate = $scope.listView.newRegisterDate.getTime();
         if(registerDate == null || registerDate == ""){
             toastr.error("Date of register is null!");
         }else{
-            DBService.verifyRegisterExistence(registerDate.getTime()).then(
+            DBService.verifyRegisterExistence(registerDate).then(
             function(res){
                 if(res > 0){
                     toastr.error("Date of register already exists!");
                 }else{
-                    DBService.insertRegister(registerDate.getTime()).then(function(res){
+                    DBService.insertRegister(registerDate).then(function(res){
                         toastr.success("Register inserted with success!");
                         $scope.getFirstRegisterDate();
-                        DBService.getRegister(registerDate.getTime()).then(function(res){
+                        DBService.getRegister(registerDate).then(function(res){
                             DBService.setFloatingRegister(res[0]);
+                            DBService.setFloatingArray($scope.listView.registerArrays);
                             $state.go('rm');
                         },function(error){
                             toastr.error(error);
@@ -41,20 +50,31 @@ app.controller('registersListController', ['$scope','$filter','DBService','toast
     }
 
     $scope.manageRegister = function(register){
+        DBService.setFloatingArray($scope.listView.registerArrays);
         DBService.setFloatingRegister(register);
         $state.go('rm');
     }
 
+    $scope.deleteRegister = function(registerDate){
+        if(confirm("Do you want to delete the register?")){
+            DBService.deleteRegister(registerDate).then(function(res){
+                toastr.success("Register deleted with success!");
+            },function(error){
+                toastr.error(error);
+            });
+        }
+    }
 
     $scope.getRangeOfRegisters = function(){
-        var start = $scope.startDate.getTime();
-        var end = new Date(document.getElementById('endDate').value).getTime()+((new Date().getTimezoneOffset())*60*1000);
+        var start = $scope.listView.startDate.getTime();
+        var end = $scope.listView.endDate.getTime();
         DBService.getRangeOfRegisters(start,end).then(function(res){
             if(res == "NO REGISTERS FOUND"){
                 toastr.error("NO REGISTERS FOUND");
-                $scope.registerArrays = [];
+                $scope.listView.registerArrays = [];
             }else{
-                $scope.registerArrays = res;
+                $scope.listView.registerArrays = res;
+                DBService.setFloatingArray($scope.listView.registerArrays);
             }
         },function(error){
             toastr.error(error);
@@ -62,13 +82,14 @@ app.controller('registersListController', ['$scope','$filter','DBService','toast
     }
 
     $scope.getRegister = function(){
-         var registerDate = new Date(document.getElementById('specificDate').value).getTime()+((new Date().getTimezoneOffset())*60*1000);
+         var registerDate = $scope.listView.specificDate.getTime();
          DBService.getRegister(registerDate).then(function(res){
              if(res == "NO REGISTERS FOUND"){
                  toastr.error("NO REGISTERS FOUND");
-                 $scope.registerArrays = [];
+                 $scope.listView.registerArrays = [];
              }else{
-                 $scope.registerArrays = res;
+                 $scope.listView.registerArrays = res;
+                 DBService.setFloatingArray($scope.listView.registerArrays);
              }
          },function(error){
              toastr.error(error);
@@ -77,39 +98,19 @@ app.controller('registersListController', ['$scope','$filter','DBService','toast
 
     $scope.getFirstRegisterDate = function(){
         DBService.getFirstRegisterDate().then(function(res){
-            if(res == $scope.actualDate.getTime() || res == $scope.actualDate.getTime()-86400000){
-                $scope.firstRegisterDate = new Date(res - 24*60*60*1000*3);
+            if(res == $scope.listView.actualDate.getTime()){
+                $scope.listView.firstRegisterDate = new Date(res - 24*60*60*1000*2);
             }else{
-                $scope.firstRegisterDate = new Date(res);
+                $scope.listView.firstRegisterDate = new Date(res);
             }
         },function(error){
-            $scope.firstRegisterDate = new Date($scope.actualDate.getTime()-5184000000);
+            $scope.listView.firstRegisterDate = $scope.listView.TwoMonthsAgo;
         });
     }
 
-    $scope.getFirstRegisterDate();
-
-    $scope.yesterday = function (){
-        return new Date($scope.actualDate.getTime()-86400000);
-    }
-
-    $scope.TwoMonthsAgo = function (){
-        return new Date($scope.actualDate.getTime()-5184000000);
-    }
-
-    $scope.$watch('SM', function(newValue, oldValue) {
-        if(newValue == 'R'){
-            $scope.SR = true;
-            $scope.SD = false;
-        }else if(newValue){
-            $scope.SR = false;
-            $scope.SD = true;
-        }
-    });
-
-    $scope.$watch('startDate', function(newValue, oldValue) {
+    $scope.$watch('listView.startDate', function(newValue, oldValue) {
         if(newValue == null){
-            document.getElementById('endDate').value = null;
+            $scope.listView.endDate = null;
         }
     });
 

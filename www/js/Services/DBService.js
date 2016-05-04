@@ -1,5 +1,6 @@
 app.service('DBService',['$q',function($q){
     floatingRegister = {};
+    floatingArray = [];
     DBServiceMethods = [];
     db = window.sqlitePlugin.openDatabase({name: "GlicoData.db", location: "default", androidLockWorkaround: 1});
 
@@ -137,6 +138,14 @@ app.service('DBService',['$q',function($q){
         floatingRegister.DINNER_TIME = new Date(floatingRegister.DINNER_TIME);
     }
 
+    DBServiceMethods.setFloatingArray = function(array){
+        floatingArray = array;
+    }
+
+    DBServiceMethods.getFloatingArray = function(){
+        return floatingArray;
+    }
+
     DBServiceMethods.getFloatingRegister = function(){
 //        alert(JSON.stringify(floatingRegister)));
         return floatingRegister;
@@ -167,6 +176,40 @@ app.service('DBService',['$q',function($q){
         db.transaction(function(tx){
             tx.executeSql(query,[periodTime,periodValue,registerDate],function(tx,res){
                 deferred.resolve("OK");
+            },function(e){
+                deferred.reject(e.message);
+            });
+        });
+        return deferred.promise;
+    }
+
+    DBServiceMethods.deleteRegister = function(registerDate){
+        var deferred = $q.defer();
+        db.transaction(function(tx){
+            tx.executeSql('DELETE FROM GLICO_DATA WHERE REGISTERDAY = ?',[registerDate],
+            function(tx,res){
+                deferred.resolve("OK");
+            },function(e){
+                deferred.reject(e.message);
+            });
+        });
+        return deferred.promise;
+    }
+
+    DBServiceMethods.getLastThirtyRegisters = function(){
+        var deferred = $q.defer();
+        db.transaction(function(tx){
+            tx.executeSql('SELECT * FROM GLICO_DATA ORDER BY REGISTERDAY DESC LIMIT 30',[],
+            function(tx,res){
+                if(res.rows.length == 0){
+                    deferred.resolve("NO REGISTERS FOUND");
+                }else{
+                    var resultArray = [];
+                    for(i = 0; i < res.rows.length ; i++){
+                        resultArray[i] = res.rows.item(i);
+                    }
+                    deferred.resolve(resultArray);
+                }
             },function(e){
                 deferred.reject(e.message);
             });
