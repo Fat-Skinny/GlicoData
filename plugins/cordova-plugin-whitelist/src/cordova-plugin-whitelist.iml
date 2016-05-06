@@ -7,6 +7,7 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module" module-name="CordovaLib" />
+    <orderEntry type="library" name="classes1" level="project" />
+    <orderEntry type="library" name="classes2" level="project" />
   </component>
 </module>

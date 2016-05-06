@@ -14,5 +14,15 @@
         },
         "is_top_level": true,
         "variables": {}
+    },
+    "cordova-plugin-crosswalk-webview": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-crosswalk-webview"
+        },
+        "is_top_level": true,
+        "variables": {
+            "XWALK_VERSION": "org.xwalk:xwalk_core_library:18+"
+        }
     }
 }
