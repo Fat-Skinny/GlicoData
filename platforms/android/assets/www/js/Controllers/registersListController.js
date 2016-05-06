@@ -7,7 +7,33 @@ app.controller('registersListController', ['$scope','$filter','DBService','toast
     $scope.listView.registerArrays = DBService.getFloatingArray();
     $scope.listView.specificDate = $scope.listView.actualDate;//$filter('date')($scope.actualDate, 'yyyy-MM-dd');
     $scope.listView.SM = 'SD';
-    $scope.listView.newRegisterDate = $scope.listView.actualDate;// $filter('date')($scope.actualDate, 'yyyy-MM-dd');
+
+    if($scope.listView.registerArrays == null){
+      var actualDate = new Date();
+      actualDate.setHours(0,0,0,0);
+      DBService.getLastRegisterDate().then(function(res){
+        var lastRegister;
+        if(res == 'NO REGISTER FOUND'){
+          lastRegister = actualDate.getTime();
+        }else{
+          lastRegister = res.REGISTERDAY;
+        }
+        DBService.insertMissingRegisters(lastRegister,actualDate.getTime());
+        DBService.getLastThirtyRegisters().then(function(res){
+          if(res != "NO REGISTERS FOUND"){
+            DBService.setFloatingArray(res);
+            $scope.listView.registerArrays = res;
+          }else{
+            DBService.setFloatingArray([]);
+          }
+        },function(error){
+            toastr.error(error);
+        });
+      },function(error){
+        toastr.error(error);
+      });
+
+    }
 
     DBService.getFirstRegisterDate().then(function(res){
         if(res == $scope.listView.actualDate.getTime()){
@@ -19,50 +45,10 @@ app.controller('registersListController', ['$scope','$filter','DBService','toast
         $scope.listView.firstRegisterDate = new Date($scope.listView.actualDate.getTime()-5184000000);
     });
 
-    $scope.newRegister = function(){
-        var registerDate = $scope.listView.newRegisterDate.getTime();
-        if(registerDate == null || registerDate == ""){
-            toastr.error("Date of register is null!");
-        }else{
-            DBService.verifyRegisterExistence(registerDate).then(
-            function(res){
-                if(res > 0){
-                    toastr.error("Date of register already exists!");
-                }else{
-                    DBService.insertRegister(registerDate).then(function(res){
-                        toastr.success("Register inserted with success!");
-                        $scope.getFirstRegisterDate();
-                        DBService.getRegister(registerDate).then(function(res){
-                            DBService.setFloatingRegister(res[0]);
-                            DBService.setFloatingArray($scope.listView.registerArrays);
-                            $state.go('rm');
-                        },function(error){
-                            toastr.error(error);
-                        });
-                    },function(error){
-                        toastr.error(error);
-                    });
-                }
-            },function(error){
-                toastr.error(error);
-            });
-        }
-    }
-
     $scope.manageRegister = function(register){
         DBService.setFloatingArray($scope.listView.registerArrays);
         DBService.setFloatingRegister(register);
         $state.go('rm');
-    }
-
-    $scope.deleteRegister = function(registerDate){
-        if(confirm("Do you want to delete the register?")){
-            DBService.deleteRegister(registerDate).then(function(res){
-                toastr.success("Register deleted with success!");
-            },function(error){
-                toastr.error(error);
-            });
-        }
     }
 
     $scope.getRangeOfRegisters = function(){

@@ -12,6 +12,10 @@
     margin-top:15%;
 }
 
+.fr{
+  -webkit-transform: translateZ(0);
+}
+
 .transparentElement{
     border: 0;
     height:17px;
@@ -21,7 +25,6 @@
     -webkit-appearance: none;
     box-shadow: -8px 10px 0px -7px #969393, 8px 10px 0px -7px #969393;
     -webkit-transition: box-shadow 0.3s;
-    -webkit-transform: translateZ(0);
     transition: box-shadow 0.3s;
 }
 

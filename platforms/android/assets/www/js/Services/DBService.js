@@ -1,6 +1,6 @@
 app.service('DBService',['$q',function($q){
     floatingRegister = {};
-    floatingArray = [];
+    floatingArray = null;
     DBServiceMethods = [];
     db = window.sqlitePlugin.openDatabase({name: "GlicoData.db", location: "default", androidLockWorkaround: 1});
 
@@ -17,32 +17,6 @@ app.service('DBService',['$q',function($q){
 
         });
     };
-
-    DBServiceMethods.insertRegister = function(registerDay){
-        var zeroTime = ((new Date().getTimezoneOffset())*60*1000);
-        var deferred = $q.defer();
-        db.transaction(function(tx){
-            tx.executeSql("INSERT INTO GLICO_DATA ("+
-                          "REGISTERDAY,"+
-                          "BREAKFAST_TIME,"+
-                          "BREAKFAST_VALUE,"+
-                          "MIDDLEMORNINGLUNCH_TIME,"+
-                          "MIDDLEMORNINGLUNCH_VALUE,"+
-                          "LUNCH_TIME,"+
-                          "LUNCH_VALUE,"+
-                          "AFTERNOONLUNCH_TIME,"+
-                          "AFTERNOONLUNCH_VALUE,"+
-                          "DINNER_TIME,"+
-                          "DINNER_VALUE) "+
-                          "VALUES (?,?,?,?,?,?,?,?,?,?,?)",[registerDay,zeroTime,0,zeroTime,0,zeroTime,0,zeroTime,0,zeroTime,0],
-                          function(tx,res){
-                            deferred.resolve(res);
-                          },function(e){
-                            deferred.reject(e.message);
-                          });
-        });
-        return deferred.promise;
-    }
 
     DBServiceMethods.getFirstRegisterDate = function(){
         var deferred = $q.defer();
@@ -79,7 +53,11 @@ app.service('DBService',['$q',function($q){
         db.transaction(function(tx){
             tx.executeSql("SELECT REGISTERDAY AS SR FROM GLICO_DATA ORDER BY REGISTERDAY DESC LIMIT 1",[],
             function(tx,res){
-                deferred.resolve(res.rows.item(0).SR);
+                if(res.rows > 0){
+                  deferred.resolve(res.rows.item(0).SR);
+                }else{
+                  deferred.resolve('NO REGISTER FOUND');
+                }
             },function(e){
                 deferred.reject(e.message);
             });
@@ -193,18 +171,6 @@ app.service('DBService',['$q',function($q){
         return deferred.promise;
     }
 
-    DBServiceMethods.deleteRegister = function(registerDate){
-        var deferred = $q.defer();
-        db.transaction(function(tx){
-            tx.executeSql('DELETE FROM GLICO_DATA WHERE REGISTERDAY = ?',[registerDate],
-            function(tx,res){
-                deferred.resolve("OK");
-            },function(e){
-                deferred.reject(e.message);
-            });
-        });
-        return deferred.promise;
-    }
 
     DBServiceMethods.getLastThirtyRegisters = function(){
         var deferred = $q.defer();
@@ -217,6 +183,11 @@ app.service('DBService',['$q',function($q){
                     var resultArray = [];
                     for(i = 0; i < res.rows.length ; i++){
                         resultArray[i] = res.rows.item(i);
+                        resultArray[i].BREAKFAST_TIME = new Date(resultArray[i].BREAKFAST_TIME);
+                        resultArray[i].MIDDLEMORNINGLUNCH_TIME = new Date(resultArray[i].MIDDLEMORNINGLUNCH_TIME);
+                        resultArray[i].LUNCH_TIME = new Date(resultArray[i].LUNCH_TIME);
+                        resultArray[i].AFTERNOONLUNCH_TIME = new Date(resultArray[i].AFTERNOONLUNCH_TIME);
+                        resultArray[i].DINNER_TIME = new Date(resultArray[i].DINNER_TIME);
                     }
                     deferred.resolve(resultArray);
                 }
@@ -225,6 +196,27 @@ app.service('DBService',['$q',function($q){
             });
         });
         return deferred.promise;
+    }
+
+    DBServiceMethods.insertMissingRegisters = function(registerDate,actualDate) {
+      db.transaction(function(tx){
+        var zeroTime = ((new Date().getTimezoneOffset())*60*1000);
+        for (registerDate; registerDate <= actualDate; registerDate += 86400000) {
+          tx.executeSql("INSERT INTO GLICO_DATA ("+
+                        "REGISTERDAY,"+
+                        "BREAKFAST_TIME,"+
+                        "BREAKFAST_VALUE,"+
+                        "MIDDLEMORNINGLUNCH_TIME,"+
+                        "MIDDLEMORNINGLUNCH_VALUE,"+
+                        "LUNCH_TIME,"+
+                        "LUNCH_VALUE,"+
+                        "AFTERNOONLUNCH_TIME,"+
+                        "AFTERNOONLUNCH_VALUE,"+
+                        "DINNER_TIME,"+
+                        "DINNER_VALUE) "+
+                        "VALUES (?,?,?,?,?,?,?,?,?,?,?)",[registerDate,zeroTime,0,zeroTime,0,zeroTime,0,zeroTime,0,zeroTime,0]);
+        }
+      });
     }
 
     return DBServiceMethods;

@@ -1,15 +1,7 @@
 <div class="container centralizedElement">
 
-    <span class="btn btn-block btn-success noFocus glyphicon glyphicon-plus margin15p" data-toggle="collapse" data-target="#registerField"></span>
-    <div class="collapse" id="registerField">
-        <div class="well well-sm">
-            Input the register day</br>
-            <input type="date" class="transparentElement margin10px" min="{{listView.TwoMonthsAgo | date:'yyyy-MM-dd'}}" max="{{listView.actualDate | date:'yyyy-MM-dd'}}" ng-model="listView.newRegisterDate"/>
-            <button class="btn btn-block btn-success noFocus" ng-click="newRegister()">Insert</button>
-        </div>
-    </div></br>
-    <span class="btn btn-block btn-success noFocus glyphicon glyphicon-search" data-toggle="collapse" data-target="#searchFields"></span>
-    <div class="collapse" id="searchFields">
+    <span class="btn btn-block btn-success noFocus glyphicon glyphicon-search margin15p" data-toggle="collapse" data-target="#searchFields"></span>
+    <div class="collapse fr" id="searchFields">
         <div class="well well-sm">
             <div>
                 Search by</br>
@@ -33,11 +25,10 @@
         </div>
     </div></br>
     <div class="table-responsive" ng-show="listView.registerArrays.length > 0">
-        <table class="table table-striped">
+        <table class="table table-striped fr">
             <th>Date of register</th>
             <th>Details</th>
             <th>Update</th>
-            <th>Delete</th>
             <tr ng-repeat-start="registerRow in listView.registerArrays track by registerRow.REGISTERDAY">
                 <td>{{ registerRow.REGISTERDAY | date: 'MM/dd/yyyy' }}</td>
                 <td>
@@ -45,10 +36,9 @@
                     <span ng-if="registerRow.expanded" class="btn btn-success noFocus glyphicon glyphicon-zoom-out" ng-click="registerRow.expanded = false"></span>
                 </td>
                 <td><span class="btn btn-success noFocus glyphicon glyphicon-pencil" ng-click="manageRegister(registerRow)"></span></td>
-                <td><span class="btn btn-success noFocus glyphicon glyphicon-remove" ng-click="deleteRegister(registerRow.REGISTERDAY)"></span></td>
             </tr>
             <tr ng-if="registerRow.expanded" ng-repeat-end="">
-                <td colspan="4">
+                <td colspan="3">
                     <div align="center">
                         <div>
                           Breakfast time</br>
