@@ -108,6 +108,82 @@ app.controller('registersListController', ['$scope','$filter','DBService','toast
         });
     }
 
+    $scope.updateBreakFast = function(register){
+        if(register.BREAKFAST_TIME == null || register.BREAKFAST_VALUE == null){
+            toastr.error("Please fill the fields");
+        }else{
+            DBService.updateRegister(register.REGISTERDAY,
+                                     register.BREAKFAST_TIME.getTime(),
+                                     register.BREAKFAST_VALUE,0)
+            .then(function(res){
+                toastr.success("Breakfast altered with success!");
+            },function(error){
+                toastr.error(error);
+            });
+        }
+    }
+
+    $scope.updateMiddleMorning = function(register){
+        if(register.MIDDLEMORNINGLUNCH_TIME == null || register.MIDDLEMORNINGLUNCH_VALUE == null){
+            toastr.error("Please fill the fields");
+        }else{
+            DBService.updateRegister(register.REGISTERDAY,
+                                     register.MIDDLEMORNINGLUNCH_TIME.getTime(),
+                                     register.MIDDLEMORNINGLUNCH_VALUE,1)
+            .then(function(res){
+                toastr.success("Middle Morning lunch altered with success!");
+            },function(error){
+                toastr.error(error);
+            });
+        }
+    }
+
+
+    $scope.updateLunch = function(register){
+        if(register.LUNCH_TIME == null || register.LUNCH_VALUE == null){
+            toastr.error("Please fill the fields");
+        }else{
+            DBService.updateRegister(register.REGISTERDAY,
+                                     register.LUNCH_TIME.getTime(),
+                                     register.LUNCH_VALUE,2)
+            .then(function(res){
+                toastr.success("Lunch altered with success!");
+            },function(error){
+                toastr.error(error);
+            });
+        }
+    }
+
+    $scope.updateAfternoon = function(register){
+        if(register.AFTERNOONLUNCH_TIME == null || register.AFTERNOONLUNCH_VALUE == null){
+            toastr.error("Please fill the fields");
+        }else{
+            DBService.updateRegister(register.REGISTERDAY,
+                                     register.AFTERNOONLUNCH_TIME.getTime(),
+                                     register.AFTERNOONLUNCH_VALUE,3)
+            .then(function(res){
+                toastr.success("Afternoon lunch altered with success!");
+            },function(error){
+                toastr.error(error);
+            });
+        }
+    }
+
+    $scope.updateDinner = function(register){
+        if(register.DINNER_TIME == null || register.DINNER_VALUE == null){
+            toastr.error("Please fill the fields");
+        }else{
+            DBService.updateRegister(register.REGISTERDAY,
+                                     register.DINNER_TIME.getTime(),
+                                     register.DINNER_VALUE,4)
+            .then(function(res){
+                toastr.success("Dinner altered with success!");
+            },function(error){
+                toastr.error(error);
+            });
+        }
+    }
+
     $scope.$watch('listView.startDate', function(newValue, oldValue) {
         if(newValue == null){
             $scope.listView.endDate = null;

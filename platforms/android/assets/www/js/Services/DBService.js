@@ -98,6 +98,11 @@ app.service('DBService',['$q',function($q){
                     var resultArray = [];
                     for(i = 0; i < res.rows.length ; i++){
                         resultArray[i] = res.rows.item(i);
+                        resultArray[i].BREAKFAST_TIME = new Date(resultArray[i].BREAKFAST_TIME);
+                        resultArray[i].MIDDLEMORNINGLUNCH_TIME = new Date(resultArray[i].MIDDLEMORNINGLUNCH_TIME);
+                        resultArray[i].LUNCH_TIME = new Date(resultArray[i].LUNCH_TIME);
+                        resultArray[i].AFTERNOONLUNCH_TIME = new Date(resultArray[i].AFTERNOONLUNCH_TIME);
+                        resultArray[i].DINNER_TIME = new Date(resultArray[i].DINNER_TIME);
                     }
                     deferred.resolve(resultArray);
                 }
@@ -119,6 +124,11 @@ app.service('DBService',['$q',function($q){
                     var resultArray = [];
                     for(i = 0; i < res.rows.length ; i++){
                         resultArray[i] = res.rows.item(i);
+                        resultArray[i].BREAKFAST_TIME = new Date(resultArray[i].BREAKFAST_TIME);
+                        resultArray[i].MIDDLEMORNINGLUNCH_TIME = new Date(resultArray[i].MIDDLEMORNINGLUNCH_TIME);
+                        resultArray[i].LUNCH_TIME = new Date(resultArray[i].LUNCH_TIME);
+                        resultArray[i].AFTERNOONLUNCH_TIME = new Date(resultArray[i].AFTERNOONLUNCH_TIME);
+                        resultArray[i].DINNER_TIME = new Date(resultArray[i].DINNER_TIME);
                     }
                     deferred.resolve(resultArray);
                 }

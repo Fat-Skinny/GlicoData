@@ -38,7 +38,7 @@
             <th>Details</th>
             <th>Update</th>
             <th>Delete</th>
-            <tr ng-repeat-start="registerRow in listView.registerArrays">
+            <tr ng-repeat-start="registerRow in listView.registerArrays track by registerRow.REGISTERDAY">
                 <td>{{ registerRow.REGISTERDAY | date: 'MM/dd/yyyy' }}</td>
                 <td>
                     <span ng-if="!registerRow.expanded" class="btn btn-success noFocus glyphicon glyphicon-zoom-in" ng-click="registerRow.expanded = true"></span>
@@ -50,20 +50,45 @@
             <tr ng-if="registerRow.expanded" ng-repeat-end="">
                 <td colspan="4">
                     <div align="center">
-                        Breakfast</br>
-                        Time {{registerRow.BREAKFAST_TIME | date: 'HH:mm'}} Value:{{registerRow.BREAKFAST_VALUE}}
+                        <div>
+                          Breakfast time</br>
+                          <input type="time" class="transparentElement margin10px" ng-model="registerRow.BREAKFAST_TIME"/></br>
+                          Breakfast glicemic value</br>
+                          <input type="number" class="transparentElement margin10px" ng-model="registerRow.BREAKFAST_VALUE"/></br>
+                          <button class="btn btn-block btn-success noFocus" ng-click="updateBreakFast(registerRow)">Update values</button>
+                        </div>
                         <hr>
-                        Middle Morning Lunch</br>
-                        Time {{registerRow.MIDDLEMORNINGLUNCH_TIME | date: 'HH:mm'}} Value: {{registerRow.MIDDLEMORNINGLUNCH_VALUE}}
+                        <div>
+                          Middle Morning lunch time</br>
+                          <input type="time" class="transparentElement margin10px" ng-model="registerRow.MIDDLEMORNINGLUNCH_TIME"/></br>
+                          Middle Morning lunch glicemic value</br>
+                          <input type="number" class="transparentElement margin10px" ng-model="registerRow.MIDDLEMORNINGLUNCH_VALUE"/></br>
+                          <button class="btn btn-block btn-success noFocus" ng-click="updateMiddleMorning(registerRow)">Update values</button>
+                        </div>
                         <hr>
-                        Lunch</br>
-                        Time {{registerRow.LUNCH_TIME | date: 'HH:mm'}} Value: {{registerRow.LUNCH_VALUE}}
+                        <div>
+                          Lunch time</br>
+                          <input type="time" class="transparentElement margin10px" ng-model="registerRow.LUNCH_TIME"/></br>
+                          Lunch glicemic value</br>
+                          <input type="number" class="transparentElement margin10px" ng-model="registerRow.LUNCH_VALUE"/></br>
+                          <button class="btn btn-block btn-success noFocus" ng-click="updateLunch(registerRow)">Update values</button>
+                        </div>
                         <hr>
-                        Afternoon Lunch</br>
-                        Time {{registerRow.AFTERNOONLUNCH_TIME | date: 'HH:mm'}} Value: {{registerRow.AFTERNOONLUNCH_VALUE}}
+                        <div>
+                          Afternoon lunch time</br>
+                          <input type="time" class="transparentElement margin10px" ng-model="registerRow.AFTERNOONLUNCH_TIME"/></br>
+                          Afternoon lunch glicemic value</br>
+                          <input type="number" class="transparentElement margin10px" ng-model="registerRow.AFTERNOONLUNCH_VALUE"/></br>
+                          <button class="btn btn-block btn-success noFocus" ng-click="updateAfternoon(registerRow)">Update values</button>
+                        </div>
                         <hr>
-                        Dinner</br>
-                        Time {{registerRow.DINNER_TIME | date: 'HH:mm'}} Value: {{registerRow.DINNER_VALUE}}
+                        <div>
+                          Dinner time</br>
+                          <input type="time" class="transparentElement margin10px" ng-model="registerRow.DINNER_TIME"/></br>
+                          Dinner glicemic value</br>
+                          <input type="number" class="transparentElement margin10px" ng-model="registerRow.DINNER_VALUE"/></br>
+                          <button class="btn btn-block btn-success noFocus" ng-click="updateDinner(registerRow)">Update values</button>
+                        </div>
                     </div>
                 </td>
             </tr>
