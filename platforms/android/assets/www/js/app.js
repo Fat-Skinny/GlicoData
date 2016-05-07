@@ -37,7 +37,7 @@ var boot = {
     }
 };
 
-var app = angular.module('GlicoData',['ngAnimate','ui.router','ui.bootstrap', 'angular-loading-bar', 'toastr']);
+var app = angular.module('GlicoData',['ngAnimate','ui.router','ui.bootstrap', 'angular-loading-bar', 'toastr','chart.js']);
 
 app.config(['$stateProvider', '$urlRouterProvider','cfpLoadingBarProvider', function($stateProvider, $urlRouterProvider,cfpLoadingBarProvider){
     'use strict';

@@ -6,7 +6,7 @@ app.service('DBService',['$q',function($q){
 
     DBServiceMethods.createTables = function(){
         db.transaction(function(tx){
-            tx.executeSql("DROP TABLE IF EXISTS GLICO_DATA");
+            // tx.executeSql("DROP TABLE IF EXISTS GLICO_DATA");
             tx.executeSql("CREATE TABLE IF NOT EXISTS GLICO_DATA("
                          +"REGISTERDAY INTEGER PRIMARY KEY,"
                          +"BREAKFAST_TIME INT,BREAKFAST_VALUE INT,"
@@ -53,7 +53,7 @@ app.service('DBService',['$q',function($q){
         db.transaction(function(tx){
             tx.executeSql("SELECT REGISTERDAY AS SR FROM GLICO_DATA ORDER BY REGISTERDAY DESC LIMIT 1",[],
             function(tx,res){
-                if(res.rows > 0){
+                if(res.rows.length > 0){
                   deferred.resolve(res.rows.item(0).SR);
                 }else{
                   deferred.resolve('NO REGISTER FOUND');

@@ -12,28 +12,53 @@ app.controller('registersListController', ['$scope','$filter','DBService','toast
       var actualDate = new Date();
       actualDate.setHours(0,0,0,0);
       DBService.getLastRegisterDate().then(function(res){
-        var lastRegister;
+        var lastRegister = null;
         if(res == 'NO REGISTER FOUND'){
           lastRegister = actualDate.getTime();
-        }else{
-          lastRegister = res.REGISTERDAY;
+        }else if(res != actualDate.getTime()){
+          lastRegister = res;
         }
-        DBService.insertMissingRegisters(lastRegister,actualDate.getTime());
-        DBService.getLastThirtyRegisters().then(function(res){
-          if(res != "NO REGISTERS FOUND"){
-            DBService.setFloatingArray(res);
-            $scope.listView.registerArrays = res;
-          }else{
-            DBService.setFloatingArray([]);
-          }
-        },function(error){
-            toastr.error(error);
-        });
+        if(lastRegister != null){
+          DBService.insertMissingRegisters(lastRegister,actualDate.getTime());
+          DBService.getLastThirtyRegisters().then(function(res){
+            if(res != "NO REGISTERS FOUND"){
+              DBService.setFloatingArray(res);
+              $scope.listView.registerArrays = res;
+            }else{
+              DBService.setFloatingArray([]);
+            }
+          },function(error){
+              toastr.error(error);
+          });
+        }else{
+          DBService.getLastThirtyRegisters().then(function(res){
+            if(res != "NO REGISTERS FOUND"){
+              DBService.setFloatingArray(res);
+              $scope.listView.registerArrays = res;
+              $scope.labels = [$filter('date')((res[0].REGISTERDAY), 'dd/MM/yyyy'), $filter('date')((res[1].REGISTERDAY), 'dd/MM/yyyy')];
+              $scope.series = ['BF','MML','L','AFL','D'];
+              $scope.data = [
+                [res[0].BREAKFAST_VALUE,res[1].BREAKFAST_VALUE],
+                [res[0].MIDDLEMORNINGLUNCH_VALUE,res[1].MIDDLEMORNINGLUNCH_VALUE],
+                [res[0].LUNCH_VALUE,res[1].LUNCH_VALUE],
+                [res[0].AFTERNOONLUNCH_VALUE,res[1].AFTERNOONLUNCH_VALUE],
+                [res[0].DINNER_VALUE,res[1].DINNER_VALUE]
+              ];
+              $scope.onClick = function (points, evt) {
+                console.log(points, evt);
+              };
+            }else{
+              DBService.setFloatingArray([]);
+            }
+          },function(error){
+              toastr.error(error);
+          });
+        }
       },function(error){
         toastr.error(error);
       });
-
     }
+
 
     DBService.getFirstRegisterDate().then(function(res){
         if(res == $scope.listView.actualDate.getTime()){

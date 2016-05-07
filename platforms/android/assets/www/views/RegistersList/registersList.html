@@ -30,7 +30,7 @@
             <th>Details</th>
             <th>Update</th>
             <tr ng-repeat-start="registerRow in listView.registerArrays track by registerRow.REGISTERDAY">
-                <td>{{ registerRow.REGISTERDAY | date: 'MM/dd/yyyy' }}</td>
+                <td>{{ registerRow.REGISTERDAY | date: 'dd/MM/yyyy' }}</td>
                 <td>
                     <span ng-if="!registerRow.expanded" class="btn btn-success noFocus glyphicon glyphicon-zoom-in" ng-click="registerRow.expanded = true"></span>
                     <span ng-if="registerRow.expanded" class="btn btn-success noFocus glyphicon glyphicon-zoom-out" ng-click="registerRow.expanded = false"></span>
@@ -84,5 +84,11 @@
             </tr>
         </table>
     </div>
+
+    <canvas id="line" class="chart chart-line"
+            chart-data="data" chart-labels="labels"
+            chart-legend="true" chart-series="series"
+            chart-click="onClick" >
+    </canvas>
 
 </div>
