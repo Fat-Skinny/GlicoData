@@ -17,6 +17,7 @@ app.controller('registersListController', ['$scope','$filter','DBService','toast
           lastRegister = actualDate.getTime();
         }else if(res != actualDate.getTime()){
           lastRegister = res;
+          lastRegister += 24*60*60*1000;
         }
         if(lastRegister != null){
           DBService.insertMissingRegisters(lastRegister,actualDate.getTime());
@@ -35,18 +36,6 @@ app.controller('registersListController', ['$scope','$filter','DBService','toast
             if(res != "NO REGISTERS FOUND"){
               DBService.setFloatingArray(res);
               $scope.listView.registerArrays = res;
-              $scope.labels = [$filter('date')((res[0].REGISTERDAY), 'dd/MM/yyyy'), $filter('date')((res[1].REGISTERDAY), 'dd/MM/yyyy')];
-              $scope.series = ['BF','MML','L','AFL','D'];
-              $scope.data = [
-                [res[0].BREAKFAST_VALUE,res[1].BREAKFAST_VALUE],
-                [res[0].MIDDLEMORNINGLUNCH_VALUE,res[1].MIDDLEMORNINGLUNCH_VALUE],
-                [res[0].LUNCH_VALUE,res[1].LUNCH_VALUE],
-                [res[0].AFTERNOONLUNCH_VALUE,res[1].AFTERNOONLUNCH_VALUE],
-                [res[0].DINNER_VALUE,res[1].DINNER_VALUE]
-              ];
-              $scope.onClick = function (points, evt) {
-                console.log(points, evt);
-              };
             }else{
               DBService.setFloatingArray([]);
             }

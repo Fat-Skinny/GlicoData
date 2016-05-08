@@ -45,6 +45,7 @@
         <script type="text/javascript" src="js/Controllers/indexController.js"></script>
         <script type="text/javascript" src="js/Controllers/registersListController.js"></script>
         <script type="text/javascript" src="js/Controllers/registerManagerController.js"></script>
+        <script type="text/javascript" src="js/Controllers/registersChartsController.js"></script>
 
         <!--css-->
         <link rel="stylesheet" type="text/css" media="all" href="lib/bootstrap/css/bootstrap.min.css">
@@ -76,21 +77,17 @@
 
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse" id="options">
-                <div ng-click="goToRM()" data-toggle="collapse" data-target="#options">
-                    <h5>Insert glicemic data</h5>
-                </div>
-                <div ng-click="" data-toggle="collapse" data-target="#options">
-                    <h5>Graphics</h5>
-                </div>
-                <div ng-click="" data-toggle="collapse" data-target="#options">
-                    <h5>Glicemic registers</h5>
-                </div>
-                <div ng-click="" data-toggle="collapse" data-target="#options">
-                    <h5>Download registers</h5>
-                </div>
-                <div ng-click="" data-toggle="collapse" data-target="#options">
-                    <h5>Settings</h5>
-                </div>
+              <div ng-click="goToRM()" data-toggle="collapse" data-target="#options">
+                  <h4>View registers</h4>
+              </div>
+              </hr>
+              <div ng-click="goToRC()" data-toggle="collapse" data-target="#options">
+                  <h4>Charts</h4>
+              </div>
+              </hr>
+              <div ng-click="" data-toggle="collapse" data-target="#options">
+                  <h4>Settings</h4>
+              </div>
             </div><!-- /.navbar-collapse -->
         </nav>
         <div ui-view >

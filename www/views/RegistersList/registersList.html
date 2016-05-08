@@ -1,7 +1,7 @@
-<div class="container centralizedElement">
+<div class="container centralizedElement fr">
 
-    <span class="btn btn-block btn-success noFocus glyphicon glyphicon-search margin15p" data-toggle="collapse" data-target="#searchFields"></span>
-    <div class="collapse fr" id="searchFields">
+    <span class="btn btn-block btn-success noFocus glyphicon glyphicon-search margin3p" data-toggle="collapse" data-target="#searchFields"></span>
+    <div class="collapse" id="searchFields">
         <div class="well well-sm">
             <div>
                 Search by</br>
@@ -25,7 +25,7 @@
         </div>
     </div></br>
     <div class="table-responsive" ng-show="listView.registerArrays.length > 0">
-        <table class="table table-striped fr">
+        <table class="table table-striped">
             <th>Date of register</th>
             <th>Details</th>
             <th>Update</th>
@@ -84,11 +84,5 @@
             </tr>
         </table>
     </div>
-
-    <canvas id="line" class="chart chart-line"
-            chart-data="data" chart-labels="labels"
-            chart-legend="true" chart-series="series"
-            chart-click="onClick" >
-    </canvas>
 
 </div>

@@ -59,6 +59,11 @@ app.config(['$stateProvider', '$urlRouterProvider','cfpLoadingBarProvider', func
             url: '/rm',
             templateUrl: 'views/RegisterManager/registerManager.html',
             controller: 'registerManagerController'
+        })
+        .state('rc',{
+            url: '/rc',
+            templateUrl: 'views/RegistersCharts/registersCharts.html',
+            controller: 'registersChartsController'
         });
 }]);
 

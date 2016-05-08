@@ -7,13 +7,12 @@
     margin-top:10px;
     margin-bottom:10px;
 }
+ .fr{
+   -webkit-transform: translateZ(0);
+ }
 
-.margin15p{
-    margin-top:15%;
-}
-
-.fr{
-  -webkit-transform: translateZ(0);
+.margin3p{
+    margin-top:3%;
 }
 
 .transparentElement{

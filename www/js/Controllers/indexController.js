@@ -4,4 +4,8 @@ app.controller('indexController', ['$state','$scope','DBService','toastr', funct
     $scope.goToRM = function(){
         $state.go('rl');
     };
+
+    $scope.goToRC = function(){
+        $state.go('rc');
+    };
 }]);
