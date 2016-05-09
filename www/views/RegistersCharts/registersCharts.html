@@ -1,9 +1,22 @@
 <div class="container centralizedElement fr">
 
+  <span class="btn btn-block btn-success noFocus glyphicon glyphicon-search margin3p" data-toggle="collapse" data-target="#searchFields"></span>
+  <div class="collapse" id="searchFields">
+      <div class="well well-sm">
+          <div class="margin10px">
+              Show chart from</br>
+              <input type="date" class="transparentElement margin10px" min="{{chartView.firstRegisterDate | date:'yyyy-MM-dd'}}" max="{{chartView.yesterday | date:'yyyy-MM-dd'}}" ng-model="chartView.startDate"/>
+              To</br>
+              <input type="date" class="transparentElement margin10px" min="{{chartView.startDate | date:'yyyy-MM-dd'}}" max="{{chartView.actualDate | date:'yyyy-MM-dd'}}" ng-model="chartView.endDate" ng-disabled="chartView.startDate == null"/></br>
+              <button class="btn btn-block btn-success noFocus" data-toggle="collapse" data-target="#searchFields" ng-click="getChartOfRegisters()">Go</button>
+          </div>
+      </div>
+  </div></br>
+
   <canvas id="line" class="chart chart-line fr"
-          chart-data="chart.data" chart-labels="chart.labels"
-          chart-legend="true" chart-series="chart.series"
-          chart-click="onClick" >
+          chart-data="chartView.chart.data" chart-labels="chartView.chart.labels"
+          chart-legend="true" chart-series="chartView.chart.series"
+          chart-click="chartView.onClick" >
   </canvas>
 
 </div>
