@@ -172,10 +172,10 @@ app.service('DBService',['$q',function($q){
     }
 
 
-    DBServiceMethods.getLastThirtyRegisters = function(){
+    DBServiceMethods.getLastTenRegisters = function(){
         var deferred = $q.defer();
         db.transaction(function(tx){
-            tx.executeSql('SELECT * FROM GLICO_DATA ORDER BY REGISTERDAY DESC LIMIT 30',[],
+            tx.executeSql('SELECT * FROM GLICO_DATA ORDER BY REGISTERDAY DESC LIMIT 10',[],
             function(tx,res){
                 if(res.rows.length == 0){
                     deferred.resolve("NO REGISTERS FOUND");

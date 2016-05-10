@@ -1,22 +1,47 @@
 <div class="container centralizedElement fr">
 
-  <span class="btn btn-block btn-success noFocus glyphicon glyphicon-search margin3p" data-toggle="collapse" data-target="#searchFields"></span>
-  <div class="collapse" id="searchFields">
-      <div class="well well-sm">
-          <div class="margin10px">
-              Show chart from</br>
-              <input type="date" class="transparentElement margin10px" min="{{chartView.firstRegisterDate | date:'yyyy-MM-dd'}}" max="{{chartView.yesterday | date:'yyyy-MM-dd'}}" ng-model="chartView.startDate"/>
-              To</br>
-              <input type="date" class="transparentElement margin10px" min="{{chartView.startDate | date:'yyyy-MM-dd'}}" max="{{chartView.actualDate | date:'yyyy-MM-dd'}}" ng-model="chartView.endDate" ng-disabled="chartView.startDate == null"/></br>
-              <button class="btn btn-block btn-success noFocus" data-toggle="collapse" data-target="#searchFields" ng-click="getChartOfRegisters()">Go</button>
-          </div>
-      </div>
-  </div></br>
+  <div class="well well-sm">
+    Search by</br>
+    <select class="transparentElement margin10px" ng-model="chartView.SC">
+        <option value="LC">Multiple registers</option>
+        <option value="PC">Specific register</option>
+    </select>
+    <div class="margin10px" ng-show="chartView.SC == 'LC'">
+        Glicemics periods</br>
+        <div class="marginleft7p">
+          <label class="checkbox"><input type="checkbox" ng-model="chartView.bf">Break Fast</label>
+          <label class="checkbox"><input type="checkbox" ng-model="chartView.mml">Middle Morning</label>
+          <label class="checkbox"><input type="checkbox" ng-model="chartView.l">Lunch</label>
+          <label class="checkbox"><input type="checkbox" ng-model="chartView.afl">Afternoon</label>
+          <label class="checkbox"><input type="checkbox" ng-model="chartView.d">Dinner</label>
+        </div>
+        Show chart from</br>
+        <input type="date" class="transparentElement margin10px" min="{{chartView.firstRegisterDate | date:'yyyy-MM-dd'}}" max="{{chartView.yesterday | date:'yyyy-MM-dd'}}" ng-model="chartView.startDate"/>
+        To</br>
+        <input type="date" class="transparentElement margin10px" min="{{chartView.startDate | date:'yyyy-MM-dd'}}" max="{{chartView.actualDate | date:'yyyy-MM-dd'}}" ng-model="chartView.endDate" ng-disabled="chartView.startDate == null"/></br>
+        <button class="btn btn-block btn-success noFocus" ng-disabled="chartView.startDate == null || chartView.endDate == null ||
+        (chartView.bf == false && chartView.mml == false && chartView.l == false && chartView.afl == false && chartView.d == false)" ng-click="getChartOfRegisters()">Go</button>
+    </div>
+    <div class="margin10px" ng-show="chartView.SC == 'PC'">
+        Get chart for the specific date</br>
+        <input type="date" class="transparentElement margin10px" min="{{chartView.firstRegisterDate | date:'yyyy-MM-dd'}}" max="{{chartView.actualDate | date:'yyyy-MM-dd'}}" ng-model="chartView.specificDate"/>
+        <button class="btn btn-block btn-success noFocus" ng-disabled="chartView.specificDate == null" ng-click="getChartOfRegister()">Go</button>
+    </div>
+  </div>
+  </br>
 
-  <canvas id="line" class="chart chart-line fr"
-          chart-data="chartView.chart.data" chart-labels="chartView.chart.labels"
-          chart-legend="true" chart-series="chartView.chart.series"
-          chart-click="chartView.onClick" >
-  </canvas>
+  <div ng-show="chartView.SC == 'LC'">
+    <canvas id="line" class="chart chart-line fr"
+            chart-data="chartView.chart.data" chart-labels="chartView.chart.labels"
+            chart-legend="true" chart-series="chartView.chart.series"
+            chart-click="chartView.onClick">
+    </canvas>
+  </div>
+
+  <div ng-show="chartView.SC == 'PC'">
+    <canvas id="polar-area" class="chart chart-polar-area fr"
+            chart-data="chartView.polar.data" chart-labels="chartView.polar.labels" >
+    </canvas>
+  </div>
 
 </div>
