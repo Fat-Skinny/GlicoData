@@ -11,6 +11,42 @@ app.controller('registersChartsController', ['$scope','$filter','DBService','toa
   $scope.chartView.l = true;
   $scope.chartView.afl = true;
   $scope.chartView.d = true;
+  $scope.chartView.colours = [{
+      fillColor: 'rgba(151,187,205,0.0)',
+      strokeColor: 'rgba(151,187,205,1)',
+      pointColor: 'rgba(151,187,205,1)',
+      pointStrokeColor: '#fff',
+      pointHighlightFill: '#fff',
+      pointHighlightStroke: 'rgba(151,187,205,0.8)'},
+      {
+      fillColor: 'rgba(220,220,220,0.0)',
+      strokeColor: 'rgba(220,220,220,1)',
+      pointColor: 'rgba(220,220,220,1)',
+      pointStrokeColor: '#fff',
+      pointHighlightFill: '#fff',
+      pointHighlightStroke: 'rgba(220,220,220,0.8)'},
+      {
+      fillColor: 'rgba(247,70,74,0.0)',
+      strokeColor: 'rgba(247,70,74,1)',
+      pointColor: 'rgba(247,70,74,1)',
+      pointStrokeColor: '#fff',
+      pointHighlightFill: '#fff',
+      pointHighlightStroke: 'rgba(247,70,74,0.8)'},
+      {
+      fillColor: 'rgba(70,191,189,0.0)',
+      strokeColor: 'rgba(70,191,189,1)',
+      pointColor: 'rgba(70,191,189,1)',
+      pointStrokeColor: '#fff',
+      pointHighlightFill: '#fff',
+      pointHighlightStroke: 'rgba(70,191,189,0.8)'},
+      {
+      fillColor: 'rgba(253,180,92,0.0)',
+      strokeColor: 'rgba(253,180,92,1)',
+      pointColor: 'rgba(253,180,92,1)',
+      pointStrokeColor: '#fff',
+      pointHighlightFill: '#fff',
+      pointHighlightStroke: 'rgba(253,180,92,0.8)'}
+    ];
   $scope.chartView.chart = {};
   $scope.chartView.polar = {};
 
