@@ -164,10 +164,4 @@ app.controller('registersListController', ['$scope','$filter','DBService','toast
         });
     }
 
-    $scope.$watch('listView.startDate', function(newValue, oldValue) {
-        if(newValue == null){
-            $scope.listView.endDate = null;
-        }
-    });
-
 }]);

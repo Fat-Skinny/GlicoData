@@ -15,7 +15,17 @@
         },
         "cordova-sqlite-storage": {
             "PACKAGE_NAME": "com.PJBB.GlicoData"
+        },
+        "de.appplant.cordova.plugin.local-notification": {
+            "PACKAGE_NAME": "com.PJBB.GlicoData"
         }
     },
-    "dependent_plugins": {}
+    "dependent_plugins": {
+        "cordova-plugin-device": {
+            "PACKAGE_NAME": "com.PJBB.GlicoData"
+        },
+        "cordova-plugin-app-event": {
+            "PACKAGE_NAME": "com.PJBB.GlicoData"
+        }
+    }
 }

@@ -64,6 +64,11 @@ app.config(['$stateProvider', '$urlRouterProvider','cfpLoadingBarProvider', func
             url: '/rc',
             templateUrl: 'views/RegistersCharts/registersCharts.html',
             controller: 'registersChartsController'
+        })
+        .state('s',{
+          url: '/s',
+          templateUrl: 'views/GlicoDataSettings/settings.html',
+          controller: 'settingsController'
         });
 }]);
 

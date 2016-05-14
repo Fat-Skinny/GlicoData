@@ -19,7 +19,7 @@
 -->
 <html>
     <head>
-        <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-eval';style-src 'self' 'unsafe-inline'">
+        <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-eval';style-src 'self' 'unsafe-inline';img-src 'self' data:">
         <meta name="format-detection" content="telephone=no">
         <meta name="msapplication-tap-highlight" content="no">
         <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
@@ -46,6 +46,7 @@
         <script type="text/javascript" src="js/Controllers/registersListController.js"></script>
         <script type="text/javascript" src="js/Controllers/registerManagerController.js"></script>
         <script type="text/javascript" src="js/Controllers/registersChartsController.js"></script>
+        <script type="text/javascript" src="js/Controllers/settingsController.js"></script>
 
         <!--css-->
         <link rel="stylesheet" type="text/css" media="all" href="lib/bootstrap/css/bootstrap.min.css">
@@ -85,7 +86,7 @@
                   <h4>Charts</h4>
               </div>
               </hr>
-              <div ng-click="" data-toggle="collapse" data-target="#options">
+              <div ng-click="goToS()" data-toggle="collapse" data-target="#options">
                   <h4>Settings</h4>
               </div>
             </div><!-- /.navbar-collapse -->
