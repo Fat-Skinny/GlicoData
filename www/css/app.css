@@ -1,8 +1,3 @@
-.centralizedElement{
-    margin-top:20%;
-    margin-bottom:45%;
-}
-
 .margin10px{
     margin-top:10px;
     margin-bottom:10px;
@@ -11,12 +6,21 @@
 .marginleft7p{
   margin-left: 7%;
 }
- .fr{
-   -webkit-transform: translateZ(0);
- }
 
-.margin3p{
-    margin-top:3%;
+body {
+  padding-top: 30%;
+}
+
+.fr{
+ -webkit-transform: translateZ(0);
+}
+
+.width33p{
+  width: 33.3%;
+}
+
+.margin4p{
+    margin-top:4%;
 }
 
 .transparentElement{

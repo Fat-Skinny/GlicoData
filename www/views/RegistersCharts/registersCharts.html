@@ -1,6 +1,5 @@
-<div class="container centralizedElement fr">
-
-  <div class="well well-sm">
+<div class="container fr">
+  <div class="well well-sm margin4p">
     Search by</br>
     <select class="transparentElement margin10px" ng-model="chartView.SC">
         <option value="LC">Multiple registers</option>
@@ -27,21 +26,20 @@
         <input type="date" class="transparentElement margin10px" min="{{chartView.firstRegisterDate | date:'yyyy-MM-dd'}}" max="{{chartView.actualDate | date:'yyyy-MM-dd'}}" ng-model="chartView.specificDate"/>
         <button class="btn btn-block btn-success noFocus" ng-disabled="chartView.specificDate == null" ng-click="getChartOfRegister()">Go</button>
     </div>
-  </div>
-  </br>
+    </br>
+    <div ng-show="chartView.SC == 'LC'">
+      <canvas id="line" class="chart chart-line fr"
+              chart-data="chartView.chart.data" chart-labels="chartView.chart.labels"
+              chart-legend="true" chart-series="chartView.chart.series"
+              chart-click="chartView.onClick" chart-colours="chartView.colours">
+      </canvas>
+    </div>
 
-  <div ng-show="chartView.SC == 'LC'">
-    <canvas id="line" class="chart chart-line fr"
-            chart-data="chartView.chart.data" chart-labels="chartView.chart.labels"
-            chart-legend="true" chart-series="chartView.chart.series"
-            chart-click="chartView.onClick" chart-colours="chartView.colours">
-    </canvas>
+    <div ng-show="chartView.SC == 'PC'">
+      <canvas id="polar-area" class="chart chart-polar-area fr"
+              chart-data="chartView.polar.data" chart-labels="chartView.polar.labels"
+              chart-legend="true" >
+      </canvas>
+    </div>
   </div>
-
-  <div ng-show="chartView.SC == 'PC'">
-    <canvas id="polar-area" class="chart chart-polar-area fr"
-            chart-data="chartView.polar.data" chart-labels="chartView.polar.labels" >
-    </canvas>
-  </div>
-
 </div>

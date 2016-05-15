@@ -74,8 +74,6 @@ app.controller('registersChartsController', ['$scope','$filter','DBService','toa
       $scope.chartView.onClick = function (points, evt) {
         console.log(points, evt);
       };
-    }else{
-      DBService.setFloatingArray([]);
     }
   },function(error){
       toastr.error(error);

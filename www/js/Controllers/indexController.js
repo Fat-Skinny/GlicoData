@@ -9,7 +9,7 @@ app.controller('indexController', ['$state','$scope','DBService','toastr', funct
         $state.go('rc');
     };
 
-    $scope.goToS = function () {
-      $state.go('s');
+    $scope.goToOT = function () {
+      $state.go('ot');
     }
 }]);

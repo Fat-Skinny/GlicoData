@@ -1,0 +1,20 @@
+<div class="container fr">
+  <div class="well well-sm margin4p">
+    <h4>Notifications</h4></br>
+    <label class="checkbox marginleft7p"><input type="checkbox" ng-model="othersView.bf">Breakfast</label>
+    <input type="time" class="transparentElement margin10px" ng-model="othersView.bf_time"/>
+    <hr>
+    <label class="checkbox marginleft7p"><input type="checkbox" ng-model="othersView.mml">Middle Morning</label>
+    <input type="time" class="transparentElement margin10px" ng-model="othersView.mml_time"/>
+    <hr>
+    <label class="checkbox marginleft7p"><input type="checkbox" ng-model="othersView.l">Lunch</label>
+    <input type="time" class="transparentElement margin10px" ng-model="othersView.l_time"/>
+    <hr>
+    <label class="checkbox marginleft7p"><input type="checkbox" ng-model="othersView.afl">Afternoon</label>
+    <input type="time" class="transparentElement margin10px" ng-model="othersView.afl_time"/>
+    <hr>
+    <label class="checkbox marginleft7p"><input type="checkbox" ng-model="othersView.d">Dinner</label>
+    <input type="time" class="transparentElement margin10px" ng-model="othersView.d_time"/>
+    <button class="btn btn-block btn-success noFocus" ng-click="othersView.setNotifications()">Set notifications</button>
+  </div>
+</div>
