@@ -1,4 +1,5 @@
 app.controller('registerManagerController', ['$scope','DBService','toastr', function ($scope,DBService,toastr) {
+    window.scrollTo(0, 0);
     $scope.register = DBService.getFloatingRegister();
 
     $scope.updateBreakFast = function(){

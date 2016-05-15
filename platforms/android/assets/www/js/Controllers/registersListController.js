@@ -1,4 +1,5 @@
 app.controller('registersListController', ['$scope','$filter','DBService','toastr','$state', function ($scope,$filter,DBService,toastr,$state) {
+    window.scrollTo(0, 0);
     $scope.listView = {};
     $scope.listView.actualDate = new Date();//$filter('date')((new Date()), 'yyyy/MM/dd');
     $scope.listView.actualDate.setHours(0,0,0,0);

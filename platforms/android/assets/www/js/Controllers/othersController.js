@@ -1,12 +1,24 @@
-app.controller('othersController', ['$scope','DBService','toastr','$filter', function ($scope,DBService,toastr,$filter) {
+app.controller('othersController', ['$scope','DBService','toastr','$filter','$window', function ($scope,DBService,toastr,$filter,$window) {
+  window.scrollTo(0, 0);
   $scope.othersView = {};
   $scope.othersView.now = new Date();
   $scope.othersView.now.setHours(0,0,0,0);
+  $scope.othersView.yesterday = new Date($scope.othersView.now.getTime()-86400000);
   $scope.othersView.bf = false;
   $scope.othersView.mml = false;
   $scope.othersView.l = false;
   $scope.othersView.afl = false;
   $scope.othersView.d = false;
+
+  DBService.getFirstRegisterDate().then(function(res){
+      if(res == $scope.othersView.now.getTime()){
+          $scope.othersView.firstRegisterDate = new Date(res - 24*60*60*1000*2);
+      }else{
+          $scope.othersView.firstRegisterDate = new Date(res);
+      }
+  },function(error){
+      $scope.othersView.firstRegisterDate = new Date($scope.othersView.now.getTime()-5184000000);
+  });
 
   cordova.plugins.notification.local.getAll(function (notifications) {
     $scope.othersView.bf_time = new Date();
@@ -160,7 +172,7 @@ app.controller('othersController', ['$scope','DBService','toastr','$filter', fun
     }
   }
 
-  $scope.othersView.setNotifications = function() {
+  $scope.setNotifications = function() {
     $scope.othersView.setBFNotification();
     $scope.othersView.setMMLNotification();
     $scope.othersView.setLNotification();
@@ -169,28 +181,49 @@ app.controller('othersController', ['$scope','DBService','toastr','$filter', fun
     toastr.success("Notifications set!");
   }
 
-  DBService.getLastTenRegisters().then(function(res){
-    if(res != "NO REGISTERS FOUND"){
-      var columns = ["Register Day", "Breakfast", "Middle morning","Lunch","Afternoon","Dinner"];
-      var rows = [];
-      for(i = 0;i < res.length; i++){
-        var data = [];
-        data.push($filter('date')((new Date(res[i].REGISTERDAY)), 'dd/MM/yyyy'));
-        data.push($filter('date')((new Date(res[i].BREAKFAST_TIME)), 'HH:mm') + " - " + res[i].BREAKFAST_VALUE);
-        data.push($filter('date')((new Date(res[i].MIDDLEMORNINGLUNCH_TIME)), 'HH:mm') + " - " + res[i].MIDDLEMORNINGLUNCH_VALUE);
-        data.push($filter('date')((new Date(res[i].LUNCH_TIME)), 'HH:mm') + " - " + res[i].LUNCH_VALUE);
-        data.push($filter('date')((new Date(res[i].AFTERNOONLUNCH_TIME)), 'HH:mm') + " - " + res[i].AFTERNOONLUNCH_VALUE);
-        data.push($filter('date')((new Date(res[i].DINNER_TIME)), 'HH:mm') + " - " + res[i].DINNER_VALUE);
-        rows.push(data);
-      }
+  $scope.makePDF = function(){
+      var start = $scope.othersView.startDate.getTime();
+      var end = $scope.othersView.endDate.getTime();
+      DBService.getRangeOfRegisters(start,end).then(function(res){
+          if(res == "NO REGISTERS FOUND"){
+              toastr.error("No register to make a PDF!");
+          }else{
+            var columns = ["Register Day", "Breakfast", "Middle morning","Lunch","Afternoon","Dinner"];
+            var rows = [];
+            for(i = 0;i < res.length; i++){
+              var data = [];
+              data.push($filter('date')((new Date(res[i].REGISTERDAY)), 'dd/MM/yyyy'));
+              data.push($filter('date')((new Date(res[i].BREAKFAST_TIME)), 'HH:mm') + " - " + res[i].BREAKFAST_VALUE);
+              data.push($filter('date')((new Date(res[i].MIDDLEMORNINGLUNCH_TIME)), 'HH:mm') + " - " + res[i].MIDDLEMORNINGLUNCH_VALUE);
+              data.push($filter('date')((new Date(res[i].LUNCH_TIME)), 'HH:mm') + " - " + res[i].LUNCH_VALUE);
+              data.push($filter('date')((new Date(res[i].AFTERNOONLUNCH_TIME)), 'HH:mm') + " - " + res[i].AFTERNOONLUNCH_VALUE);
+              data.push($filter('date')((new Date(res[i].DINNER_TIME)), 'HH:mm') + " - " + res[i].DINNER_VALUE);
+              rows.push(data);
+            }
 
-      // Only pt supported (not mm or in)
-      var doc = new jsPDF('p', 'pt');
-      doc.autoTable(columns, rows);
-      // doc.save('glicemicRegisters.pdf');
-    }
-  },function(error){
-      toastr.error(error);
-  });
+            // Only pt supported (not mm or in)
+            var doc = new jsPDF('p', 'pt');
+            doc.autoTable(columns, rows);
+            window.resolveLocalFileSystemURL(cordova.file.externalCacheDirectory, function(fileSystem) {
+             fileSystem.getFile("glicemicRegisters.pdf", {create: true}, function(entry) {
+                var fileEntry = entry;
+                entry.createWriter(function(writer) {
+                   writer.write( doc.output());
+                }, function(error) {
+                   console.log(error);
+                });
+             }, function(error){
+                console.log(error);
+             });
+            },
+            function(event){
+              console.log( evt.target.error.code );
+            });
+            $window.open(cordova.file.externalCacheDirectory+"/glicemicRegisters.pdf","_system",'location=no');
+          }
+      },function(error){
+          toastr.error(error);
+      });
+  }
 
 }]);

@@ -1,4 +1,5 @@
 app.controller('registersChartsController', ['$scope','$filter','DBService','toastr', function ($scope,$filter,DBService,toastr) {
+  window.scrollTo(0, 0);
   $scope.chartView = {};
   $scope.chartView.actualDate = new Date();//$filter('date')((new Date()), 'yyyy/MM/dd');
   $scope.chartView.actualDate.setHours(0,0,0,0);
