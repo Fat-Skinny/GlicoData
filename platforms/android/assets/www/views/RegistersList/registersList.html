@@ -75,6 +75,14 @@
                           <input type="number" class="transparentElement margin10px" ng-model="registerRow.DINNER_VALUE"/></br>
                           <button class="btn btn-block btn-success noFocus" ng-disabled="registerRow.DINNER_TIME == null || registerRow.DINNER_VALUE == null" ng-click="updateDinner(registerRow)">Update values</button>
                         </div>
+                        <hr>
+                        <div>
+                          Bedtime time</br>
+                          <input type="time" class="transparentElement margin10px" ng-model="registerRow.BEDTIME_TIME"/></br>
+                          Bedtime glicemic value</br>
+                          <input type="number" class="transparentElement margin10px" ng-model="registerRow.BEDTIME_VALUE"/></br>
+                          <button class="btn btn-block btn-success noFocus" ng-disabled="registerRow.BEDTIME_TIME == null || registerRow.BEDTIME_VALUE == null" ng-click="updateBedtime(registerRow)">Update values</button>
+                        </div>
                     </div>
                 </td>
             </tr>

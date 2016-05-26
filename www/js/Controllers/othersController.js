@@ -9,6 +9,7 @@ app.controller('othersController', ['$scope','DBService','toastr','$filter','$wi
   $scope.othersView.l = false;
   $scope.othersView.afl = false;
   $scope.othersView.d = false;
+  $scope.othersView.bt = false;
 
   DBService.getFirstRegisterDate().then(function(res){
       if(res == $scope.othersView.now.getTime()){
@@ -31,6 +32,8 @@ app.controller('othersController', ['$scope','DBService','toastr','$filter','$wi
     $scope.othersView.afl_time.setHours(16,0,0,0);
     $scope.othersView.d_time = new Date();
     $scope.othersView.d_time.setHours(19,0,0,0);
+    $scope.othersView.bt_time = new Date();
+    $scope.othersView.bt_time.setHours(23,0,0,0);
     for(i = 0; i < notifications.length ; i++){
       switch (notifications[i].id) {
         case 1:
@@ -58,23 +61,15 @@ app.controller('othersController', ['$scope','DBService','toastr','$filter','$wi
           $scope.othersView.d_time.setTime(notifications[i].data);
           $scope.othersView.d = true;
           break;
+        case 6:
+          $scope.othersView.bt_time = new Date();
+          $scope.othersView.bt_time.setTime(notifications[i].data);
+          $scope.othersView.bt = true;
+          break;
         default:
           break;
       }
     }
-  });
-
-  cordova.plugins.notification.local.isPresent(5, function (present) {
-      if(present){
-        cordova.plugins.notification.local.get(5, function (notifications) {
-          $scope.othersView.d_time = new Date();
-          $scope.othersView.d_time.setTime(notifications.data);
-        });
-      }else{
-        $scope.othersView.d_time = new Date();
-        $scope.othersView.d_time.setHours(19,0,0,0);
-      }
-      $scope.othersView.d = present;
   });
 
   $scope.othersView.setBFNotification = function() {
@@ -172,12 +167,32 @@ app.controller('othersController', ['$scope','DBService','toastr','$filter','$wi
     }
   }
 
+  $scope.othersView.setBTNotification = function() {
+    if($scope.othersView.bt == false){
+      cordova.plugins.notification.local.cancel(6, function(){});
+    }else{
+      var time = $scope.othersView.now;
+      time.setHours($scope.othersView.bt_time.getHours(),$scope.othersView.bt_time.getMinutes(),0,0);
+      if(time.getTime() < new Date().getTime())
+        time = new Date(time.getTime()+(24*60*60*1000));
+      cordova.plugins.notification.local.schedule({
+        id: 6,
+        text: "Bedtime",
+        at: time,
+        every: "day",
+        led: "FFFFFF",
+        data: time.getTime()
+      });
+    }
+  }
+
   $scope.setNotifications = function() {
     $scope.othersView.setBFNotification();
     $scope.othersView.setMMLNotification();
     $scope.othersView.setLNotification();
     $scope.othersView.setAFLNotification();
     $scope.othersView.setDNotification();
+    $scope.othersView.setBTNotification();
     toastr.success("Notifications set!");
   }
 
@@ -188,7 +203,7 @@ app.controller('othersController', ['$scope','DBService','toastr','$filter','$wi
           if(res == "NO REGISTERS FOUND"){
               toastr.error("No register to make a PDF!");
           }else{
-            var columns = ["Register Day", "Breakfast", "Middle morning","Lunch","Afternoon","Dinner"];
+            var columns = ["Register Day", "Breakfast", "Middle morning","Lunch","Afternoon","Dinner","Bedtime"];
             var rows = [];
             for(i = 0;i < res.length; i++){
               var data = [];
@@ -198,6 +213,8 @@ app.controller('othersController', ['$scope','DBService','toastr','$filter','$wi
               data.push($filter('date')((new Date(res[i].LUNCH_TIME)), 'HH:mm') + " - " + res[i].LUNCH_VALUE);
               data.push($filter('date')((new Date(res[i].AFTERNOONLUNCH_TIME)), 'HH:mm') + " - " + res[i].AFTERNOONLUNCH_VALUE);
               data.push($filter('date')((new Date(res[i].DINNER_TIME)), 'HH:mm') + " - " + res[i].DINNER_VALUE);
+              data.push($filter('date')((new Date(res[i].DINNER_TIME)), 'HH:mm') + " - " + res[i].DINNER_VALUE);
+              data.push($filter('date')((new Date(res[i].BEDTIME_TIME)), 'HH:mm') + " - " + res[i].BEDTIME_VALUE);
               rows.push(data);
             }
 

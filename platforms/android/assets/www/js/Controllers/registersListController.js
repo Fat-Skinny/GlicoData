@@ -165,4 +165,15 @@ app.controller('registersListController', ['$scope','$filter','DBService','toast
         });
     }
 
+    $scope.updateBedtime = function(register){
+        DBService.updateRegister(register.REGISTERDAY,
+                                 register.BEDTIME_TIME.getTime(),
+                                 register.BEDTIME_VALUE,5)
+        .then(function(res){
+            toastr.success("Bedtime altered with success!");
+        },function(error){
+            toastr.error(error);
+        });
+    }
+
 }]);

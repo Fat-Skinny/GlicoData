@@ -6,14 +6,15 @@ app.service('DBService',['$q',function($q){
 
     DBServiceMethods.createTables = function(){
         db.transaction(function(tx){
-            // tx.executeSql("DROP TABLE IF EXISTS GLICO_DATA");
+            //tx.executeSql("DROP TABLE IF EXISTS GLICO_DATA");
             tx.executeSql("CREATE TABLE IF NOT EXISTS GLICO_DATA("
                          +"REGISTERDAY INTEGER PRIMARY KEY,"
                          +"BREAKFAST_TIME INT,BREAKFAST_VALUE INT,"
                          +"MIDDLEMORNINGLUNCH_TIME INT,MIDDLEMORNINGLUNCH_VALUE INT,"
                          +"LUNCH_TIME INT,LUNCH_VALUE INT,"
                          +"AFTERNOONLUNCH_TIME INT,AFTERNOONLUNCH_VALUE INT,"
-                         +"DINNER_TIME INT,DINNER_VALUE INT)");
+                         +"DINNER_TIME INT,DINNER_VALUE INT,"
+                         +"BEDTIME_TIME INT,BEDTIME_VALUE INT)");
 
         });
     };
@@ -81,6 +82,7 @@ app.service('DBService',['$q',function($q){
                         resultArray[i].LUNCH_TIME = new Date(resultArray[i].LUNCH_TIME);
                         resultArray[i].AFTERNOONLUNCH_TIME = new Date(resultArray[i].AFTERNOONLUNCH_TIME);
                         resultArray[i].DINNER_TIME = new Date(resultArray[i].DINNER_TIME);
+                        resultArray[i].BEDTIME_TIME = new Date(resultArray[i].BEDTIME_TIME);
                     }
                     deferred.resolve(resultArray);
                 }
@@ -107,6 +109,7 @@ app.service('DBService',['$q',function($q){
                         resultArray[i].LUNCH_TIME = new Date(resultArray[i].LUNCH_TIME);
                         resultArray[i].AFTERNOONLUNCH_TIME = new Date(resultArray[i].AFTERNOONLUNCH_TIME);
                         resultArray[i].DINNER_TIME = new Date(resultArray[i].DINNER_TIME);
+                        resultArray[i].BEDTIME_TIME = new Date(resultArray[i].BEDTIME_TIME);
                     }
                     deferred.resolve(resultArray);
                 }
@@ -124,6 +127,7 @@ app.service('DBService',['$q',function($q){
         floatingRegister.LUNCH_TIME = new Date(floatingRegister.LUNCH_TIME);
         floatingRegister.AFTERNOONLUNCH_TIME = new Date(floatingRegister.AFTERNOONLUNCH_TIME);
         floatingRegister.DINNER_TIME = new Date(floatingRegister.DINNER_TIME);
+        floatingRegister.BEDTIME_TIME = new Date(floatingRegister.BEDTIME_TIME);
     }
 
     DBServiceMethods.setFloatingArray = function(array){
@@ -158,6 +162,9 @@ app.service('DBService',['$q',function($q){
             case 4:
                 query = "UPDATE GLICO_DATA SET DINNER_TIME = ?,DINNER_VALUE = ? WHERE REGISTERDAY = ?";
                 break;
+            case 5:
+                query = "UPDATE GLICO_DATA SET BEDTIME_TIME = ?,BEDTIME_VALUE = ? WHERE REGISTERDAY = ?";
+                break;
             default:
                 return "ERRO,FLAG INVALIDA";
         }
@@ -188,6 +195,7 @@ app.service('DBService',['$q',function($q){
                         resultArray[i].LUNCH_TIME = new Date(resultArray[i].LUNCH_TIME);
                         resultArray[i].AFTERNOONLUNCH_TIME = new Date(resultArray[i].AFTERNOONLUNCH_TIME);
                         resultArray[i].DINNER_TIME = new Date(resultArray[i].DINNER_TIME);
+                        resultArray[i].BEDTIME_TIME = new Date(resultArray[i].BEDTIME_TIME);
                     }
                     deferred.resolve(resultArray);
                 }
@@ -213,8 +221,15 @@ app.service('DBService',['$q',function($q){
                         "AFTERNOONLUNCH_TIME,"+
                         "AFTERNOONLUNCH_VALUE,"+
                         "DINNER_TIME,"+
-                        "DINNER_VALUE) "+
-                        "VALUES (?,?,?,?,?,?,?,?,?,?,?)",[registerDate,zeroTime,0,zeroTime,0,zeroTime,0,zeroTime,0,zeroTime,0]);
+                        "DINNER_VALUE,"+
+                        "BEDTIME_TIME,"+
+                        "BEDTIME_VALUE) "+
+                        "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)",[registerDate,zeroTime+25200000,0,
+                                                                           zeroTime+36000000,0,
+                                                                           zeroTime+43200000,0,
+                                                                           zeroTime+57600000,0,
+                                                                           zeroTime+72000000,0,
+                                                                           zeroTime+82800000,0]);
         }
       });
     }

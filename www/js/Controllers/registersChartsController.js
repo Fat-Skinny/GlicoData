@@ -12,6 +12,7 @@ app.controller('registersChartsController', ['$scope','$filter','DBService','toa
   $scope.chartView.l = true;
   $scope.chartView.afl = true;
   $scope.chartView.d = true;
+  $scope.chartView.bt = true;
   $scope.chartView.colours = [{
       fillColor: 'rgba(151,187,205,0.0)',
       strokeColor: 'rgba(151,187,205,1)',
@@ -46,7 +47,14 @@ app.controller('registersChartsController', ['$scope','$filter','DBService','toa
       pointColor: 'rgba(253,180,92,1)',
       pointStrokeColor: '#fff',
       pointHighlightFill: '#fff',
-      pointHighlightStroke: 'rgba(253,180,92,0.8)'}
+      pointHighlightStroke: 'rgba(253,180,92,0.8)'},
+      {
+      fillColor: 'rgba(77,83,96,0.0)',
+      strokeColor: 'rgba(77,83,96,1)',
+      pointColor: 'rgba(77,83,96,1)',
+      pointStrokeColor: '#fff',
+      pointHighlightFill: '#fff',
+      pointHighlightStroke: 'rgba(77,83,96,0.8)'}
     ];
   $scope.chartView.chart = {};
   $scope.chartView.polar = {};
@@ -58,6 +66,7 @@ app.controller('registersChartsController', ['$scope','$filter','DBService','toa
       var L = [];
       var AFL = [];
       var D = [];
+      var BT = [];
       var RD = [];
       for(i = res.length-1;i >= 0; i--){
         RD.push($filter('date')((res[i].REGISTERDAY), 'dd/MM/yyyy'));
@@ -66,11 +75,12 @@ app.controller('registersChartsController', ['$scope','$filter','DBService','toa
         L.push(res[i].LUNCH_VALUE);
         AFL.push(res[i].AFTERNOONLUNCH_VALUE);
         D.push(res[i].DINNER_VALUE);
+        BT.push(res[i].BEDTIME_VALUE);
       }
       $scope.chartView.chart = {
         labels : RD,
-        series : ['Break Fast','Middle Morning','Lunch','Afternoon','Dinner'],
-        data : [BF,MML,L,AFL,D]
+        series : ['Break Fast','Middle Morning','Lunch','Afternoon','Dinner','Bedtime'],
+        data : [BF,MML,L,AFL,D,BT]
       };
       $scope.chartView.onClick = function (points, evt) {
         console.log(points, evt);
@@ -85,8 +95,8 @@ app.controller('registersChartsController', ['$scope','$filter','DBService','toa
           toastr.error("NO REGISTERS FOUND");
       }else{
         $scope.chartView.polar = {
-          labels : ['Break Fast','Middle Morning','Lunch','Afternoon','Dinner'],
-          data : [res[0].BREAKFAST_VALUE,res[0].MIDDLEMORNINGLUNCH_VALUE,res[0].LUNCH_VALUE,res[0].AFTERNOONLUNCH_VALUE,res[0].DINNER_VALUE]
+          labels : ['Break Fast','Middle Morning','Lunch','Afternoon','Dinner','Bedtime'],
+          data : [res[0].BREAKFAST_VALUE,res[0].MIDDLEMORNINGLUNCH_VALUE,res[0].LUNCH_VALUE,res[0].AFTERNOONLUNCH_VALUE,res[0].DINNER_VALUE,res[0].BEDTIME_VALUE]
         };
       }
   },function(error){
@@ -116,6 +126,7 @@ app.controller('registersChartsController', ['$scope','$filter','DBService','toa
               var L = [];
               var AFL = [];
               var D = [];
+              var BT = [];
               var RD = [];
               var S = [];
               if($scope.chartView.bf == true)
@@ -128,6 +139,8 @@ app.controller('registersChartsController', ['$scope','$filter','DBService','toa
                 S.push('Afternoon');
               if($scope.chartView.d == true)
                 S.push('Dinner');
+              if($scope.chartView.bt == true)
+                S.push('Bedtime');
               for(i = res.length-1;i >= 0; i--){
                 RD.push($filter('date')((res[i].REGISTERDAY), 'dd/MM/yyyy'));
                 if($scope.chartView.bf == true)
@@ -140,6 +153,8 @@ app.controller('registersChartsController', ['$scope','$filter','DBService','toa
                   AFL.push(res[i].AFTERNOONLUNCH_VALUE);
                 if($scope.chartView.d == true)
                   D.push(res[i].DINNER_VALUE);
+                if($scope.chartView.bt == true)
+                  BT.push(res[i].BEDTIME_VALUE);
               }
               var dt = [];
               if($scope.chartView.bf == true)
@@ -152,6 +167,8 @@ app.controller('registersChartsController', ['$scope','$filter','DBService','toa
                 dt.push(AFL);
               if($scope.chartView.d == true)
                 dt.push(D);
+              if($scope.chartView.bt == true)
+                dt.push(BT);
               $scope.chartView.chart = {
                 labels : RD,
                 series : S,
@@ -170,8 +187,8 @@ app.controller('registersChartsController', ['$scope','$filter','DBService','toa
             toastr.error("NO REGISTERS FOUND");
         }else{
           $scope.chartView.polar = {
-            labels : ['Break Fast','Middle Morning','Lunch','Afternoon','Dinner'],
-            data : [res[0].BREAKFAST_VALUE,res[0].MIDDLEMORNINGLUNCH_VALUE,res[0].LUNCH_VALUE,res[0].AFTERNOONLUNCH_VALUE,res[0].DINNER_VALUE]
+            labels : ['Break Fast','Middle Morning','Lunch','Afternoon','Dinner','Bedtime'],
+            data : [res[0].BREAKFAST_VALUE,res[0].MIDDLEMORNINGLUNCH_VALUE,res[0].LUNCH_VALUE,res[0].AFTERNOONLUNCH_VALUE,res[0].DINNER_VALUE,res[0].BEDTIME_VALUE]
           };
         }
     },function(error){

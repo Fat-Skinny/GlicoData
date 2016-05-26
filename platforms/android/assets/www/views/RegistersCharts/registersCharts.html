@@ -13,13 +13,14 @@
           <label class="checkbox"><input type="checkbox" ng-model="chartView.l">Lunch</label>
           <label class="checkbox"><input type="checkbox" ng-model="chartView.afl">Afternoon</label>
           <label class="checkbox"><input type="checkbox" ng-model="chartView.d">Dinner</label>
+          <label class="checkbox"><input type="checkbox" ng-model="chartView.bt">Bedtime</label>
         </div>
         Show chart from</br>
         <input type="date" class="transparentElement margin10px" min="{{chartView.firstRegisterDate | date:'yyyy-MM-dd'}}" max="{{chartView.yesterday | date:'yyyy-MM-dd'}}" ng-model="chartView.startDate"/>
         To</br>
         <input type="date" class="transparentElement margin10px" min="{{chartView.startDate | date:'yyyy-MM-dd'}}" max="{{chartView.actualDate | date:'yyyy-MM-dd'}}" ng-model="chartView.endDate" ng-disabled="chartView.startDate == null"/></br>
         <button class="btn btn-block btn-success noFocus" ng-disabled="chartView.startDate == null || chartView.endDate == null ||
-        (chartView.bf == false && chartView.mml == false && chartView.l == false && chartView.afl == false && chartView.d == false)" ng-click="getChartOfRegisters()">Go</button>
+        (chartView.bf == false && chartView.mml == false && chartView.l == false && chartView.afl == false && chartView.d == false && chartView.bt == false)" ng-click="getChartOfRegisters()">Go</button>
     </div>
     <div class="margin10px" ng-show="chartView.SC == 'PC'">
         Get chart for the specific date</br>

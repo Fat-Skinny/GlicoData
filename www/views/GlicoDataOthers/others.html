@@ -15,8 +15,11 @@
     <hr>
     <label class="checkbox marginleft7p"><input type="checkbox" ng-model="othersView.d">Dinner</label>
     <input type="time" class="transparentElement margin10px" ng-model="othersView.d_time"/>
+    <hr>
+    <label class="checkbox marginleft7p"><input type="checkbox" ng-model="othersView.bt">Bedtime</label>
+    <input type="time" class="transparentElement margin10px" ng-model="othersView.bt_time"/>
     <button class="btn btn-block btn-success noFocus" ng-click="setNotifications()" ng-disabled="othersView.bf_time == null ||
-    othersView.mml_time == null || othersView.l_time == null || othersView.afl_time == null || othersView.d_time == null">Set notifications</button>
+    othersView.mml_time == null || othersView.l_time == null || othersView.afl_time == null || othersView.d_time == null || othersView.bt_time == null">Set notifications</button>
   </div>
   <div class="well well-sm">
     <h4>Make a pdf of the registers<span class="pull-right glyphicon glyphicon-question-sign"></span></h4></br>
