@@ -2,8 +2,9 @@
   <div class="well well-sm margin4p">
     Search by <span class="pull-right glyphicon glyphicon-question-sign"></span></br>
     <select class="transparentElement margin10px" ng-model="chartView.SC">
-        <option value="LC">Multiple registers</option>
-        <option value="PC">Specific register</option>
+        <option value="LC">Multiple days</option>
+        <option value="PC">Specific day</option>
+        <option value="LC2">Glicemic line</option>
     </select>
     <div class="margin10px" ng-show="chartView.SC == 'LC'">
         Glicemics periods</br>
@@ -28,18 +29,35 @@
         <button class="btn btn-block btn-success noFocus" ng-disabled="chartView.specificDate == null" ng-click="getChartOfRegister()">Go</button>
     </div>
     </br>
+    <div class="margin10px" ng-show="chartView.SC == 'LC2'">
+      Show line from</br>
+      <input type="date" class="transparentElement margin10px" min="{{chartView.firstRegisterDate | date:'yyyy-MM-dd'}}" max="{{chartView.yesterday | date:'yyyy-MM-dd'}}" ng-model="chartView.startDate2"/>
+      To</br>
+      <input type="date" class="transparentElement margin10px" min="{{chartView.startDate2 | date:'yyyy-MM-dd'}}" max="{{chartView.actualDate | date:'yyyy-MM-dd'}}" ng-model="chartView.endDate2" ng-disabled="chartView.startDate2 == null"/></br>
+      <button class="btn btn-block btn-success noFocus" ng-disabled="chartView.startDate2 == null || chartView.endDate2 == null" ng-click="getGlicemicLine()">Go</button>
+    </div>
+    </br>
     <div ng-show="chartView.SC == 'LC'">
       <canvas id="line" class="chart chart-line fr"
               chart-data="chartView.chart.data" chart-labels="chartView.chart.labels"
               chart-legend="true" chart-series="chartView.chart.series"
-              chart-click="chartView.onClick" chart-colours="chartView.colours">
+              chart-click="chartView.onClick" chart-colours="chartView.colours" chart-options="chartView.options">
+      </canvas>
+      <!-- <button class="btn btn-block btn-success noFocus" ng-click="getRangeImg()">Get graph as image</button> -->
+    </div>
+
+    <div ng-show="chartView.SC == 'LC2'">
+      <canvas id="line" class="chart chart-line fr"
+              chart-data="chartView.line.data" chart-labels="chartView.line.labels"
+              chart-series="chartView.line.series" chart-options="chartView.options"
+              chart-click="chartView.onClick" chart-colours="chartView.colours" >
       </canvas>
     </div>
 
     <div ng-show="chartView.SC == 'PC'">
       <canvas id="polar-area" class="chart chart-polar-area fr"
               chart-data="chartView.polar.data" chart-labels="chartView.polar.labels"
-              chart-legend="true" >
+              chart-legend="true" chart-options="chartView.options">
       </canvas>
     </div>
   </div>

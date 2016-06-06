@@ -10,6 +10,10 @@ app.controller('othersController', ['$scope','DBService','toastr','$filter','$wi
   $scope.othersView.afl = false;
   $scope.othersView.d = false;
   $scope.othersView.bt = false;
+  $scope.othersView.options = {
+    animation : false
+  }
+//  $scope.othersView.line = {};
 
   DBService.getFirstRegisterDate().then(function(res){
       if(res == $scope.othersView.now.getTime()){
@@ -213,12 +217,9 @@ app.controller('othersController', ['$scope','DBService','toastr','$filter','$wi
               data.push($filter('date')((new Date(res[i].LUNCH_TIME)), 'HH:mm') + " - " + res[i].LUNCH_VALUE);
               data.push($filter('date')((new Date(res[i].AFTERNOONLUNCH_TIME)), 'HH:mm') + " - " + res[i].AFTERNOONLUNCH_VALUE);
               data.push($filter('date')((new Date(res[i].DINNER_TIME)), 'HH:mm') + " - " + res[i].DINNER_VALUE);
-              data.push($filter('date')((new Date(res[i].DINNER_TIME)), 'HH:mm') + " - " + res[i].DINNER_VALUE);
               data.push($filter('date')((new Date(res[i].BEDTIME_TIME)), 'HH:mm') + " - " + res[i].BEDTIME_VALUE);
               rows.push(data);
             }
-
-            // Only pt supported (not mm or in)
             var doc = new jsPDF('p', 'pt');
             doc.autoTable(columns, rows);
             window.resolveLocalFileSystemURL(cordova.file.externalCacheDirectory, function(fileSystem) {
@@ -232,11 +233,11 @@ app.controller('othersController', ['$scope','DBService','toastr','$filter','$wi
              }, function(error){
                 console.log(error);
              });
+             $window.open(cordova.file.externalCacheDirectory+"/glicemicRegisters.pdf","_system",'location=no');
             },
             function(event){
               console.log( evt.target.error.code );
             });
-            $window.open(cordova.file.externalCacheDirectory+"/glicemicRegisters.pdf","_system",'location=no');
           }
       },function(error){
           toastr.error(error);

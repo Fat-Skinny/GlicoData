@@ -1,4 +1,4 @@
-app.controller('registersChartsController', ['$scope','$filter','DBService','toastr', function ($scope,$filter,DBService,toastr) {
+app.controller('registersChartsController', ['$scope','$filter','DBService','toastr','$window', function ($scope,$filter,DBService,toastr,$window) {
   window.scrollTo(0, 0);
   $scope.chartView = {};
   $scope.chartView.actualDate = new Date();//$filter('date')((new Date()), 'yyyy/MM/dd');
@@ -57,7 +57,11 @@ app.controller('registersChartsController', ['$scope','$filter','DBService','toa
       pointHighlightStroke: 'rgba(77,83,96,0.8)'}
     ];
   $scope.chartView.chart = {};
+  $scope.chartView.line = {};
   $scope.chartView.polar = {};
+  $scope.chartView.options = {
+    animation : false
+  }
 
   DBService.getLastTenRegisters().then(function(res){
     if(res != "NO REGISTERS FOUND"){
@@ -81,6 +85,39 @@ app.controller('registersChartsController', ['$scope','$filter','DBService','toa
         labels : RD,
         series : ['Break Fast','Middle Morning','Lunch','Afternoon','Dinner','Bedtime'],
         data : [BF,MML,L,AFL,D,BT]
+      };
+      var DT2 = [];
+      var RD2 = [];
+      for(i = res.length-8;i >= 0; i--){
+        if(res[i].BREAKFAST_VALUE != 0){
+          RD2.push($filter('date')((res[i].REGISTERDAY), 'dd/MM/yyyy') + ' - ' + $filter('date')((res[i].BREAKFAST_TIME), 'HH:mm'));
+          DT2.push(res[i].BREAKFAST_VALUE);
+        }
+        if(res[i].MIDDLEMORNINGLUNCH_VALUE != 0){
+          RD2.push($filter('date')((res[i].REGISTERDAY), 'dd/MM/yyyy') + ' - ' + $filter('date')((res[i].MIDDLEMORNINGLUNCH_TIME), 'HH:mm'));
+          DT2.push(res[i].MIDDLEMORNINGLUNCH_VALUE);
+        }
+        if(res[i].LUNCH_VALUE != 0){
+          RD2.push($filter('date')((res[i].REGISTERDAY), 'dd/MM/yyyy') + ' - ' + $filter('date')((res[i].LUNCH_TIME), 'HH:mm'));
+          DT2.push(res[i].LUNCH_VALUE);
+        }
+        if(res[i].AFTERNOONLUNCH_VALUE != 0){
+          RD2.push($filter('date')((res[i].REGISTERDAY), 'dd/MM/yyyy') + ' - ' + $filter('date')((res[i].AFTERNOONLUNCH_TIME), 'HH:mm'));
+          DT2.push(res[i].AFTERNOONLUNCH_VALUE);
+        }
+        if(res[i].DINNER_VALUE != 0){
+          RD2.push($filter('date')((res[i].REGISTERDAY), 'dd/MM/yyyy') + ' - ' + $filter('date')((res[i].DINNER_TIME), 'HH:mm'));
+          DT2.push(res[i].DINNER_VALUE);
+        }
+        if(res[i].BEDTIME_VALUE != 0){
+          RD2.push($filter('date')((res[i].REGISTERDAY), 'dd/MM/yyyy') + ' - ' + $filter('date')((res[i].BEDTIME_TIME), 'HH:mm'));
+          DT2.push(res[i].BEDTIME_VALUE);
+        }
+      }
+      $scope.chartView.line = {
+        labels : RD2,
+        series : ['Value '],
+        data : [DT2]
       };
       $scope.chartView.onClick = function (points, evt) {
         console.log(points, evt);
@@ -196,4 +233,73 @@ app.controller('registersChartsController', ['$scope','$filter','DBService','toa
     });
   }
 
+  $scope.getGlicemicLine = function(){
+      var start = $scope.chartView.startDate2.getTime();
+      var end = $scope.chartView.endDate2.getTime();
+      DBService.getRangeOfRegisters(start,end).then(function(res){
+          if(res == "NO REGISTERS FOUND"){
+              toastr.error("NO REGISTERS FOUND");
+              //$scope.chartView.registerArrays = [];
+          }else{
+              var DT = [];
+              var RD = [];
+              for(i = res.length-1;i >= 0; i--){
+                if(res[i].BREAKFAST_VALUE != 0){
+                  RD.push($filter('date')((res[i].REGISTERDAY), 'dd/MM/yyyy') + ' - ' + $filter('date')((res[i].BREAKFAST_TIME), 'HH:mm'));
+                  DT.push(res[i].BREAKFAST_VALUE);
+                }
+                if(res[i].MIDDLEMORNINGLUNCH_VALUE != 0){
+                  RD.push($filter('date')((res[i].REGISTERDAY), 'dd/MM/yyyy') + ' - ' + $filter('date')((res[i].MIDDLEMORNINGLUNCH_TIME), 'HH:mm'));
+                  DT.push(res[i].MIDDLEMORNINGLUNCH_VALUE);
+                }
+                if(res[i].LUNCH_VALUE != 0){
+                  RD.push($filter('date')((res[i].REGISTERDAY), 'dd/MM/yyyy') + ' - ' + $filter('date')((res[i].LUNCH_TIME), 'HH:mm'));
+                  DT.push(res[i].LUNCH_VALUE);
+                }
+                if(res[i].AFTERNOONLUNCH_VALUE != 0){
+                  RD.push($filter('date')((res[i].REGISTERDAY), 'dd/MM/yyyy') + ' - ' + $filter('date')((res[i].AFTERNOONLUNCH_TIME), 'HH:mm'));
+                  DT.push(res[i].AFTERNOONLUNCH_VALUE);
+                }
+                if(res[i].DINNER_VALUE != 0){
+                  RD.push($filter('date')((res[i].REGISTERDAY), 'dd/MM/yyyy') + ' - ' + $filter('date')((res[i].DINNER_TIME), 'HH:mm'));
+                  DT.push(res[i].DINNER_VALUE);
+                }
+                if(res[i].BEDTIME_VALUE != 0){
+                  RD.push($filter('date')((res[i].REGISTERDAY), 'dd/MM/yyyy') + ' - ' + $filter('date')((res[i].BEDTIME_TIME), 'HH:mm'));
+                  DT.push(res[i].BEDTIME_VALUE);
+                }
+              }
+              $scope.chartView.line = {
+                labels : RD,
+                series : ['Value '],
+                data : [DT]
+              };
+          }
+      },function(error){
+          toastr.error(error);
+      });
+  }
+  // $scope.getRangeImg = function(){
+  //   var doc = new jsPDF('p', 'pt');
+  //   var url = document.getElementById('line').toDataURL("image/jpeg");
+  //   url = url.replace(/^data:image\/(png|jpg);base64,/, "");
+  //   doc.addImage(url, 'JPEG', 15, 40, 180, 100);
+  //   console.log(url);
+  //   window.resolveLocalFileSystemURL(cordova.file.externalCacheDirectory, function(fileSystem) {
+  //    fileSystem.getFile("rangeImg.pdf", {create: true}, function(entry) {
+  //       var fileEntry = entry;
+  //       entry.createWriter(function(writer) {
+  //          writer.write( doc.output());
+  //       }, function(error) {
+  //          console.log(error);
+  //       });
+  //    }, function(error){
+  //       console.log(error);
+  //    });
+  //    $window.open(cordova.file.externalCacheDirectory+"/rangeImg.pdf","_system",'location=no');
+  //   },
+  //   function(event){
+  //     console.log( evt.target.error.code );
+  //   });
+  // }
 }]);

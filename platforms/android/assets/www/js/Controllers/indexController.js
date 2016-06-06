@@ -28,6 +28,7 @@ app.controller('indexController', ['$state','$scope','DBService','toastr', funct
           DBService.insertMissingRegisters(lastRegister,actualDate.getTime());
           DBService.getLastTenRegisters().then(function(res){
             if(res != "NO REGISTERS FOUND"){
+              var index = 0;
               switch (notification.id) {
                 case 1:
                   var clicktime = new Date();
@@ -58,11 +59,14 @@ app.controller('indexController', ['$state','$scope','DBService','toastr', funct
                   var clicktime = new Date();
                   clicktime.setHours(clicktime.getHours(),clicktime.getMinutes(),0,0);
                   res[0].BEDTIME_TIME = clicktime;
+                  if(clicktime.getHours() >= 0 && clicktime.getHours() <= 6){
+                    index = 1;
+                  }
                   break;
                 default:
                   break;
               }
-              DBService.setFloatingRegister(res[0]);
+              DBService.setFloatingRegister(res[index]);
               $state.go('rm');
             }
           },function(error){
@@ -71,6 +75,7 @@ app.controller('indexController', ['$state','$scope','DBService','toastr', funct
         }else{
           DBService.getLastTenRegisters().then(function(res){
             if(res != "NO REGISTERS FOUND"){
+              var index = 0;
               switch (notification.id) {
                 case 1:
                   var clicktime = new Date();
@@ -101,11 +106,14 @@ app.controller('indexController', ['$state','$scope','DBService','toastr', funct
                   var clicktime = new Date();
                   clicktime.setHours(clicktime.getHours(),clicktime.getMinutes(),0,0);
                   res[0].BEDTIME_TIME = clicktime;
+                  if(clicktime.getHours() >= 0 && clicktime.getHours() <= 6){
+                    index = 1;
+                  }
                   break;
                 default:
                   break;
               }
-              DBService.setFloatingRegister(res[0]);
+              DBService.setFloatingRegister(res[index]);
               $state.go('rm');
             }
           },function(error){

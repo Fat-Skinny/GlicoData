@@ -29,5 +29,4 @@
     <input type="date" class="transparentElement margin10px" min="{{othersView.startDate | date:'yyyy-MM-dd'}}" max="{{othersView.now | date:'yyyy-MM-dd'}}" ng-model="othersView.endDate" ng-disabled="othersView.startDate == null"/></br>
     <button class="btn btn-block btn-success noFocus" ng-disabled="othersView.endDate == null || othersView.startDate == null" ng-click="makePDF()">Go</button>
   </div>
-
 </div>
