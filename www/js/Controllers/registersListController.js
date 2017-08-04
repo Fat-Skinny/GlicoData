@@ -176,4 +176,7 @@ app.controller('registersListController', ['$scope','$filter','DBService','toast
         });
     }
 
+    $scope.helpIcon = function(){
+
+    }
 }]);

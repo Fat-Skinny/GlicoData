@@ -15,16 +15,6 @@
         "is_top_level": true,
         "variables": {}
     },
-    "cordova-plugin-crosswalk-webview": {
-        "source": {
-            "type": "registry",
-            "id": "cordova-plugin-crosswalk-webview"
-        },
-        "is_top_level": true,
-        "variables": {
-            "XWALK_VERSION": "org.xwalk:xwalk_core_library:18+"
-        }
-    },
     "de.appplant.cordova.plugin.local-notification": {
         "source": {
             "type": "git",
@@ -64,6 +54,22 @@
             "id": "cordova-plugin-compat"
         },
         "is_top_level": false,
+        "variables": {}
+    },
+    "cordova-plugin-crosswalk-webview": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-crosswalk-webview@2.3.0"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "cordova-plugin-dialogs": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-dialogs"
+        },
+        "is_top_level": true,
         "variables": {}
     }
 }

@@ -193,19 +193,36 @@ module.exports = [
             "cordova"
         ],
         "runs": true
+    },
+    {
+        "id": "cordova-plugin-dialogs.notification",
+        "file": "plugins/cordova-plugin-dialogs/www/notification.js",
+        "pluginId": "cordova-plugin-dialogs",
+        "merges": [
+            "navigator.notification"
+        ]
+    },
+    {
+        "id": "cordova-plugin-dialogs.notification_android",
+        "file": "plugins/cordova-plugin-dialogs/www/android/notification.js",
+        "pluginId": "cordova-plugin-dialogs",
+        "merges": [
+            "navigator.notification"
+        ]
     }
 ];
 module.exports.metadata = 
 // TOP OF METADATA
 {
-    "cordova-plugin-crosswalk-webview": "1.7.0",
     "cordova-plugin-whitelist": "1.2.1",
     "cordova-sqlite-storage": "1.2.1",
     "cordova-plugin-device": "1.1.2",
     "cordova-plugin-app-event": "1.2.0",
     "de.appplant.cordova.plugin.local-notification": "0.8.4",
     "cordova-plugin-compat": "1.0.0",
-    "cordova-plugin-file": "4.2.0"
+    "cordova-plugin-file": "4.2.0",
+    "cordova-plugin-crosswalk-webview": "2.3.0",
+    "cordova-plugin-dialogs": "1.3.3"
 };
 // BOTTOM OF METADATA
 });
