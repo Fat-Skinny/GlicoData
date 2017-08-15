@@ -1,4 +1,4 @@
-app.controller('othersController', ['$scope','DBService','toastr','$filter','$window', function ($scope,DBService,toastr,$filter,$window) {
+app.controller('othersController', ['$scope','DBService','toastr','$filter','$window','$uibModal', function ($scope,DBService,toastr,$filter,$window,$uibModal) {
   window.scrollTo(0, 0);
   $scope.othersView = {};
   $scope.othersView.now = new Date();
@@ -243,5 +243,78 @@ app.controller('othersController', ['$scope','DBService','toastr','$filter','$wi
           toastr.error(error);
       });
   }
+    $scope.helpIconNotification = function(){
 
+        var ModalInstanceCtrl = function ($scope, $uibModalInstance, data) {
+                    $scope.data = data;
+                    $scope.close = function(/*result*/){
+                      $uibModalInstance.close($scope.data);
+                    };
+                  };
+
+        var data = {
+                      boldTextTitle: "Notifications",
+                      textAlert : "There is 6 possible notifications to turn on, one for each period. When clicking on the notification, you will be take to a register manager, where the glicemic value can be updated.",
+                      mode : 'info'
+                    }
+
+        var modalInstance = $uibModal.open({
+            template: '<div class="modal-body" style="padding:0px">'+
+                           '<div class="alert alert-{{data.mode}}" style="margin-bottom:0px">'+
+                               '<button type="button" class="close" data-ng-click="close()" >'+
+                                   '<span class="glyphicon glyphicon-remove-circle"></span>'+
+                               '</button>'+
+                               '<strong>{{data.boldTextTitle}}</strong> </br> </br> <div style="text-align: justify;"> {{data.textAlert}} </div>'+
+                           '</div>'+
+                       '</div>',
+            controller: ModalInstanceCtrl
+            ,
+            backdrop: true,
+            keyboard: true,
+            backdropClick: true,
+            size: 'lg',
+            resolve: {
+              data: function () {
+                return data;
+              }
+            }
+          });
+    }
+    $scope.helpIconPDF = function(){
+
+        var ModalInstanceCtrl = function ($scope, $uibModalInstance, data) {
+                    $scope.data = data;
+                    $scope.close = function(/*result*/){
+                      $uibModalInstance.close($scope.data);
+                    };
+                  };
+
+        var data = {
+                      boldTextTitle: "PDF",
+                      textAlert : "Here you can generate a PDF containing the registers of the selected period, which you can send to anyone by email or save in your cloud",
+                      mode : 'info'
+                    }
+
+        var modalInstance = $uibModal.open({
+            template: '<div class="modal-body" style="padding:0px">'+
+                           '<div class="alert alert-{{data.mode}}" style="margin-bottom:0px">'+
+                               '<button type="button" class="close" data-ng-click="close()" >'+
+                                   '<span class="glyphicon glyphicon-remove-circle"></span>'+
+                               '</button>'+
+                               '<strong>{{data.boldTextTitle}}</strong> </br> </br> <div style="text-align: justify;"> {{data.textAlert}} </div>'+
+                           '</div>'+
+                       '</div>',
+            controller: ModalInstanceCtrl
+            ,
+            backdrop: true,
+            keyboard: true,
+            backdropClick: true,
+            size: 'lg',
+            resolve: {
+              data: function () {
+                return data;
+              }
+            }
+          });
+    }
 }]);
