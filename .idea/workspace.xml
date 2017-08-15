@@ -6,12 +6,11 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/platforms/android/.gradle/3.3/taskArtifacts/fileSnapshots.bin" afterPath="$PROJECT_DIR$/platforms/android/.gradle/3.3/taskArtifacts/fileSnapshots.bin" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/platforms/android/.gradle/3.3/taskArtifacts/taskArtifacts.bin" afterPath="$PROJECT_DIR$/platforms/android/.gradle/3.3/taskArtifacts/taskArtifacts.bin" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/platforms/android/.gradle/3.3/taskArtifacts/taskArtifacts.lock" afterPath="$PROJECT_DIR$/platforms/android/.gradle/3.3/taskArtifacts/taskArtifacts.lock" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/GlicoData.iml" afterPath="$PROJECT_DIR$/.idea/GlicoData.iml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/platforms/android/assets/www/js/Controllers/registersListController.js" afterPath="$PROJECT_DIR$/platforms/android/assets/www/js/Controllers/registersListController.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/platforms/android/assets/www/views/RegistersList/registersList.html" afterPath="$PROJECT_DIR$/platforms/android/assets/www/views/RegistersList/registersList.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/js/Controllers/registersListController.js" afterPath="$PROJECT_DIR$/www/js/Controllers/registersListController.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/views/RegistersList/registersList.html" afterPath="$PROJECT_DIR$/www/views/RegistersList/registersList.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/platforms/android/assets/www/js/Controllers/registersChartsController.js" afterPath="$PROJECT_DIR$/platforms/android/assets/www/js/Controllers/registersChartsController.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/platforms/android/assets/www/views/RegistersCharts/registersCharts.html" afterPath="$PROJECT_DIR$/platforms/android/assets/www/views/RegistersCharts/registersCharts.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/js/Controllers/registersChartsController.js" afterPath="$PROJECT_DIR$/www/js/Controllers/registersChartsController.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/views/RegistersCharts/registersCharts.html" afterPath="$PROJECT_DIR$/www/views/RegistersCharts/registersCharts.html" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -25,28 +24,38 @@
       <file leaf-file-name="registersList.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/www/views/RegistersList/registersList.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="340">
-              <caret line="32" column="37" lean-forward="true" selection-start-line="32" selection-start-column="37" selection-end-line="32" selection-end-column="37" />
+            <state relative-caret-position="68">
+              <caret line="4" column="102" lean-forward="false" selection-start-line="4" selection-start-column="81" selection-end-line="4" selection-end-column="102" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="registersListController.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="registersListController.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/www/js/Controllers/registersListController.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="226">
-              <caret line="192" column="36" lean-forward="false" selection-start-line="192" selection-start-column="36" selection-end-line="192" selection-end-column="36" />
+            <state relative-caret-position="0">
+              <caret line="0" column="102" lean-forward="false" selection-start-line="0" selection-start-column="93" selection-end-line="0" selection-end-column="102" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="app.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/www/js/app.js">
+      <file leaf-file-name="registersCharts.html" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/www/views/RegistersCharts/registersCharts.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="663">
-              <caret line="39" column="120" lean-forward="false" selection-start-line="39" selection-start-column="120" selection-end-line="39" selection-end-column="120" />
+            <state relative-caret-position="237">
+              <caret line="45" column="102" lean-forward="false" selection-start-line="45" selection-start-column="102" selection-end-line="45" selection-end-column="102" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="registersChartsController.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/www/js/Controllers/registersChartsController.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-3179">
+              <caret line="62" column="22" lean-forward="false" selection-start-line="62" selection-start-column="22" selection-end-line="62" selection-end-column="22" />
               <folding />
             </state>
           </provider>
@@ -78,6 +87,8 @@
         <option value="$PROJECT_DIR$/www/js/app.js" />
         <option value="$PROJECT_DIR$/www/views/RegistersList/registersList.html" />
         <option value="$PROJECT_DIR$/www/js/Controllers/registersListController.js" />
+        <option value="$PROJECT_DIR$/www/js/Controllers/registersChartsController.js" />
+        <option value="$PROJECT_DIR$/www/views/RegistersCharts/registersCharts.html" />
       </list>
     </option>
   </component>
@@ -134,7 +145,27 @@
               <item name="GlicoData" type="b2602c69:ProjectViewProjectNode" />
               <item name="GlicoData" type="462c0819:PsiDirectoryNode" />
               <item name="www" type="462c0819:PsiDirectoryNode" />
+              <item name="js" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="GlicoData" type="b2602c69:ProjectViewProjectNode" />
+              <item name="GlicoData" type="462c0819:PsiDirectoryNode" />
+              <item name="www" type="462c0819:PsiDirectoryNode" />
+              <item name="js" type="462c0819:PsiDirectoryNode" />
+              <item name="Controllers" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="GlicoData" type="b2602c69:ProjectViewProjectNode" />
+              <item name="GlicoData" type="462c0819:PsiDirectoryNode" />
+              <item name="www" type="462c0819:PsiDirectoryNode" />
               <item name="views" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="GlicoData" type="b2602c69:ProjectViewProjectNode" />
+              <item name="GlicoData" type="462c0819:PsiDirectoryNode" />
+              <item name="www" type="462c0819:PsiDirectoryNode" />
+              <item name="views" type="462c0819:PsiDirectoryNode" />
+              <item name="RegistersCharts" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -366,7 +397,7 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3184797" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3184797" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32896462" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Captures" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -704,13 +735,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/www/views/RegistersCharts/registersCharts.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-102">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/www/js/Services/DBService.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-3229">
@@ -751,16 +775,37 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/www/views/RegistersList/registersList.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="340">
-          <caret line="32" column="37" lean-forward="true" selection-start-line="32" selection-start-column="37" selection-end-line="32" selection-end-column="37" />
+        <state relative-caret-position="68">
+          <caret line="4" column="102" lean-forward="false" selection-start-line="4" selection-start-column="81" selection-end-line="4" selection-end-column="102" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/www/js/Controllers/registersListController.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="226">
-          <caret line="192" column="36" lean-forward="false" selection-start-line="192" selection-start-column="36" selection-end-line="192" selection-end-column="36" />
+        <state relative-caret-position="0">
+          <caret line="0" column="102" lean-forward="false" selection-start-line="0" selection-start-column="93" selection-end-line="0" selection-end-column="102" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/img/logo.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/js/Controllers/registersChartsController.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-3179">
+          <caret line="62" column="22" lean-forward="false" selection-start-line="62" selection-start-column="22" selection-end-line="62" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/views/RegistersCharts/registersCharts.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="237">
+          <caret line="45" column="102" lean-forward="false" selection-start-line="45" selection-start-column="102" selection-end-line="45" selection-end-column="102" />
           <folding />
         </state>
       </provider>

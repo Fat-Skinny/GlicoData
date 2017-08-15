@@ -1,4 +1,4 @@
-app.controller('registersChartsController', ['$scope','$filter','DBService','toastr','$window', function ($scope,$filter,DBService,toastr,$window) {
+app.controller('registersChartsController', ['$scope','$filter','DBService','toastr','$window','$uibModal', function ($scope,$filter,DBService,toastr,$window,$uibModal) {
   window.scrollTo(0, 0);
   $scope.chartView = {};
   $scope.chartView.actualDate = new Date();//$filter('date')((new Date()), 'yyyy/MM/dd');
@@ -60,7 +60,7 @@ app.controller('registersChartsController', ['$scope','$filter','DBService','toa
   $scope.chartView.line = {};
   $scope.chartView.polar = {};
   $scope.chartView.options = {
-    animation : false
+    animation : false,
   }
 
   DBService.getLastTenRegisters().then(function(res){
@@ -302,4 +302,45 @@ app.controller('registersChartsController', ['$scope','$filter','DBService','toa
   //     console.log( evt.target.error.code );
   //   });
   // }
+
+  $scope.helpIcon = function(){
+
+          var ModalInstanceCtrl = function ($scope, $uibModalInstance, data) {
+                        $scope.data = data;
+                        $scope.close = function(/*result*/){
+                          $uibModalInstance.close($scope.data);
+                        };
+                      };
+
+          var data = {
+                          boldTextTitle: "Charts",
+                          textAlert : "There is three charts available for use, the Multiple days chart" +
+                                      " provide a chart with multiple lines representing the periods of multiple days" +
+                                      " contained inside the selected range, the Specific day chart provide a polar area chart, with each section of the chart representing a period of the day," +
+                                      " and the glicemic line provide a continuous line of the registers contained on the selected period.",
+                          mode : 'info'
+                        }
+
+          var modalInstance = $uibModal.open({
+                template: '<div class="modal-body" style="padding:0px">'+
+                               '<div class="alert alert-{{data.mode}}" style="margin-bottom:0px">'+
+                                   '<button type="button" class="close" data-ng-click="close()" >'+
+                                       '<span class="glyphicon glyphicon-remove-circle"></span>'+
+                                   '</button>'+
+                                   '<strong>{{data.boldTextTitle}}</strong> </br> </br> <div style="text-align: justify;"> {{data.textAlert}} </div>'+
+                               '</div>'+
+                           '</div>',
+                controller: ModalInstanceCtrl
+                ,
+                backdrop: true,
+                keyboard: true,
+                backdropClick: true,
+                size: 'lg',
+                resolve: {
+                  data: function () {
+                    return data;
+                  }
+                }
+              });
+      }
 }]);
