@@ -1,5 +1,6 @@
 <div class="container fr">
     <div class="well well-sm margin4p">
+        <div id="teste"></div>
         <div>
             Search by <span class="pull-right glyphicon glyphicon-question-sign" ng-click="helpIcon()"></span></br>
             <select class="transparentElement margin10px" ng-model="listView.SM">
@@ -24,14 +25,14 @@
         <table class="table table-striped">
             <th>Date of register</th>
             <th>Details</th>
-            <th>Update</th>
+            <!--<th>Update</th>-->
             <tr ng-repeat-start="registerRow in listView.registerArrays track by registerRow.REGISTERDAY">
                 <td>{{ registerRow.REGISTERDAY | date: 'dd/MM/yyyy' }}</td>
                 <td>
                     <span ng-if="!registerRow.expanded" class="btn btn-success noFocus glyphicon glyphicon-zoom-in" ng-click="registerRow.expanded = true"></span>
                     <span ng-if="registerRow.expanded" class="btn btn-success noFocus glyphicon glyphicon-zoom-out" ng-click="registerRow.expanded = false"></span>
                 </td>
-                <td><span class="btn btn-success noFocus glyphicon glyphicon-pencil" ng-click="manageRegister(registerRow)"></span></td>
+                <!--<td><span class="btn btn-success noFocus glyphicon glyphicon-pencil" ng-click="manageRegister(registerRow)"></span></td>-->
             </tr>
             <tr ng-if="registerRow.expanded" ng-repeat-end="">
                 <td colspan="3">

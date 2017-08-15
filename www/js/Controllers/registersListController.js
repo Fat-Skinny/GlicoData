@@ -1,4 +1,4 @@
-app.controller('registersListController', ['$scope','$filter','DBService','toastr','$state', function ($scope,$filter,DBService,toastr,$state) {
+app.controller('registersListController', ['$scope','$filter','DBService','toastr','$state','$uibModal', function ($scope,$filter,DBService,toastr,$state,$uibModal) {
     window.scrollTo(0, 0);
     $scope.listView = {};
     $scope.listView.actualDate = new Date();//$filter('date')((new Date()), 'yyyy/MM/dd');
@@ -178,5 +178,42 @@ app.controller('registersListController', ['$scope','$filter','DBService','toast
 
     $scope.helpIcon = function(){
 
+        var ModalInstanceCtrl = function ($scope, $uibModalInstance, data) {
+                      $scope.data = data;
+                      $scope.close = function(/*result*/){
+                        $uibModalInstance.close($scope.data);
+                      };
+                    };
+
+        var data = {
+                        boldTextTitle: "Filters and Registers",
+                        textAlert : "There is two filters available for use, the specific date filter" +
+                                    " bring only the register from the selected date, and the range of dates brings the registers" +
+                                    " contained inside the selected range. The registers can be altered by clicking" +
+                                    " the details buttons and changing the information on the expanded details.",
+                        mode : 'info'
+                      }
+
+        var modalInstance = $uibModal.open({
+              template: '<div class="modal-body" style="padding:0px">'+
+                             '<div class="alert alert-{{data.mode}}" style="margin-bottom:0px">'+
+                                 '<button type="button" class="close" data-ng-click="close()" >'+
+                                     '<span class="glyphicon glyphicon-remove-circle"></span>'+
+                                 '</button>'+
+                                 '<strong>{{data.boldTextTitle}}</strong> </br> </br> <div style="text-align: justify;"> {{data.textAlert}} </div>'+
+                             '</div>'+
+                         '</div>',
+              controller: ModalInstanceCtrl
+              ,
+              backdrop: true,
+              keyboard: true,
+              backdropClick: true,
+              size: 'lg',
+              resolve: {
+                data: function () {
+                  return data;
+                }
+              }
+            });
     }
 }]);
